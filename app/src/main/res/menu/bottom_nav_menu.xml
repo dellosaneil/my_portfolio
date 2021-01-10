@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/profileFragment"
+        android:title="@string/nav_graph_profile"
+        android:icon="@drawable/ic_user"/>
+
+    <item android:id="@+id/projectsFragment"
+        android:title="@string/nav_graph_projects"
+        android:icon="@drawable/ic_briefcase"/>
+
+
+    <item android:id="@+id/settingsFragment"
+        android:title="@string/nav_graph_settings"
+        android:icon="@drawable/ic_settings"/>
+
+
+
+</menu>
