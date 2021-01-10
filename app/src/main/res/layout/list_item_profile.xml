@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/rv_profile_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/profile_text_background"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="3dp"
+            android:textSize="26sp"
+            tools:text="Hello There" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/rv_profile_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="7dp"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ac tincidunt vitae semper quis lectus nulla at volutpat. Sed nisi lacus sed viverra tellus in hac. Dictum non consectetur a erat nam. Quis varius quam quisque id diam vel. Pretium quam vulputate dignissim suspendisse in est. Dignissim diam quis enim lobortis. Gravida dictum fusce ut placerat orci nulla. Sit amet porttitor eget dolor. Mattis rhoncus urna neque viverra justo. Urna nunc id cursus metus aliquam eleifend. Porttitor leo a diam sollicitudin tempor id." />
+
+
+    </LinearLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

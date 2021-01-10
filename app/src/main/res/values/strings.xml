@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">MyPortfolio</string>
+    <string name="my_name">Neil Dellosa</string>
+    <string name="photo_description">My profile image</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name ="nav_graph_profile">Profile</string>
