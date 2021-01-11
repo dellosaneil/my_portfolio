@@ -24,14 +24,14 @@ class ProfileFragment : Fragment() {
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         initializeRecyclerView()
-
         return binding.root
     }
+
 
     private fun initializeRecyclerView() {
         val recyclerViewDecorator = RecyclerViewDecorator(5)
         profileAdapter = ProfileAdapter()
-        binding.recyclerViewProfile.apply {
+        binding.profileRecyclerView.apply {
             adapter = profileAdapter
             layoutManager = LinearLayoutManager(requireContext())
             addItemDecoration(recyclerViewDecorator)

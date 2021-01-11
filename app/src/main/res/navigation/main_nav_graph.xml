@@ -20,4 +20,9 @@
         android:name="com.example.myportfolio.fragments.bottom_nav_fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/certificateFragment"
+        android:name="com.example.myportfolio.fragments.bottom_nav_fragments.certificate.CertificateFragment"
+        android:label="fragment_certificate"
+        tools:layout="@layout/fragment_certificate" />
 </navigation>

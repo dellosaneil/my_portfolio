@@ -4,7 +4,11 @@
     <string name="photo_description">My profile image</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name ="nav_graph_profile">Profile</string>
-    <string name = "nav_graph_projects">Projects</string>
+    <string name="nav_graph_profile">Profile</string>
+    <string name="nav_graph_projects">Projects</string>
     <string name="nav_graph_settings">Settings</string>
+    <string name="nav_graph_certificates">Certificates</string>
+
+    <string name="certificate_list_item_logo">a logo for the certificate provider</string>
+    <string name="certificate_see_credential"><u>See Credential</u></string>
 </resources>
