@@ -11,10 +11,13 @@ import com.example.myportfolio.data.CertificateData
 interface CertificateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateCertificateList(certificate : CertificateData)
+    suspend fun addCertificate(certificate : CertificateData)
 
     @Query("SELECT * FROM certificate_table")
     fun retrieveCertificateList() : LiveData<List<CertificateData>>
+
+    @Query("SELECT COUNT(*) FROM certificate_table WHERE credentialId = :id")
+    fun checkCertificate(id : String) : Int
 
 
 }

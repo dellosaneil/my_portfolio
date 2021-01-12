@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.myportfolio.RecyclerViewDecorator
 import com.example.myportfolio.data.ProfileData
 import com.example.myportfolio.databinding.FragmentProfileBinding
@@ -26,6 +25,8 @@ class ProfileFragment : Fragment() {
         initializeRecyclerView()
         return binding.root
     }
+
+
 
 
     private fun initializeRecyclerView() {

@@ -8,6 +8,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = "certificate_table")
 data class CertificateData(
+    val certificateTitle : String,
     val companyName: String,
     val credentialId: String,
     val credentialUrl: String,

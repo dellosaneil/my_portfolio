@@ -3,9 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="75dp"
     android:layout_margin="2dp"
-    app:cardElevation="2dp">
+    app:cardElevation="2dp"
+    android:clickable="true"
+    android:foreground="?android:selectableItemBackground"
+    android:focusable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,44 +16,33 @@
 
         <ImageView
             android:id="@+id/certificate_logo"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
             android:contentDescription="@string/certificate_list_item_logo"
             android:foregroundGravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_classroom" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:gravity="center_horizontal"
-            android:text="@string/certificate_see_credential"
-            android:textColor="@color/hyper_link"
-            android:textSize="8sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/certificate_logo"
-            app:layout_constraintStart_toStartOf="@+id/certificate_logo"
-            app:layout_constraintTop_toBottomOf="@+id/certificate_logo" />
 
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/certificate_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="@color/black"
-            android:textStyle="bold"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/certificate_logo"
             app:layout_constraintTop_toTopOf="@+id/certificate_logo"
+            app:layout_constraintVertical_bias="0.0"
             tools:text=" Android App Components - Services, Local IPC, and Content Providers" />
 
 
