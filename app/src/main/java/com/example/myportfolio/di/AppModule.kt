@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.myportfolio.Constants.Companion.DATABASE_NAME
 import com.example.myportfolio.room.MyDatabase
+import com.example.myportfolio.room.dao.CertificateDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,12 +18,12 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext context: Context) =
+    fun provideDatabase(@ApplicationContext context: Context): MyDatabase =
         Room.databaseBuilder(context, MyDatabase::class.java, DATABASE_NAME).build()
 
     @Singleton
     @Provides
-    fun provideCertificateDao(database : MyDatabase) = database.certificateDao()
+    fun provideCertificateDao(database: MyDatabase): CertificateDao = database.certificateDao()
 
 
 }

@@ -19,5 +19,8 @@ interface CertificateDao {
     @Query("SELECT COUNT(*) FROM certificate_table WHERE credentialId = :id")
     fun checkCertificate(id : String) : Int
 
+    @Query("DELETE FROM certificate_table")
+    suspend fun deleteAllCertificates()
+
 
 }

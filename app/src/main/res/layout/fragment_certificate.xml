@@ -5,11 +5,26 @@
     android:layout_height="match_parent"
     tools:context=".fragments.bottom_nav_fragments.certificate.CertificateFragment">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/certificates_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/list_item_certificate" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:id="@+id/certificate_add"
+        tools:ignore="ContentDescription,RtlHardcoded" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:id="@+id/certificate_delete"
+        tools:ignore="ContentDescription,RtlHardcoded" />
+
+
 
 </FrameLayout>

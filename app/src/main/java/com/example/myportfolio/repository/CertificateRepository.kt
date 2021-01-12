@@ -9,5 +9,6 @@ class CertificateRepository @Inject constructor(private val dao : CertificateDao
     suspend fun addCertificate(certificate : CertificateData) = dao.addCertificate(certificate)
     fun retrieveCertificates() = dao.retrieveCertificateList()
     fun checkCertificate(id : String) = dao.checkCertificate(id)
+    suspend fun deleteAllCertificates() = dao.deleteAllCertificates()
 
 }

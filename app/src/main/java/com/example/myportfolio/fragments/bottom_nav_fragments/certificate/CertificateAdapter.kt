@@ -2,6 +2,7 @@ package com.example.myportfolio.fragments.bottom_nav_fragments.certificate
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myportfolio.R
 import com.example.myportfolio.data.CertificateData
@@ -10,8 +11,13 @@ import com.example.myportfolio.databinding.ListItemCertificateBinding
 class CertificateAdapter : RecyclerView.Adapter<CertificateAdapter.CertificateViewHolder>() {
     private var certificateList: List<CertificateData> = listOf()
 
-    fun setCertificateList(certificateData: List<CertificateData>) {
-        certificateList = certificateData
+    fun setCertificateList(newList: List<CertificateData>) {
+        val oldList = certificateList
+        val diffResult = DiffUtil.calculateDiff(
+            DiffCallbackAdapter(oldList, newList)
+        )
+        certificateList = newList
+        diffResult.dispatchUpdatesTo(this)
     }
 
 
@@ -29,6 +35,23 @@ class CertificateAdapter : RecyclerView.Adapter<CertificateAdapter.CertificateVi
     }
 
     override fun getItemCount() = certificateList.size
+
+    class DiffCallbackAdapter(
+        private val oldList: List<CertificateData>,
+        private val newList: List<CertificateData>
+    ) : DiffUtil.Callback() {
+        override fun getOldListSize() = oldList.size
+
+        override fun getNewListSize() = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            oldList[oldItemPosition].credentialId == newList[newItemPosition].credentialId
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            oldList[oldItemPosition] == newList[newItemPosition]
+
+    }
+
 
     inner class CertificateViewHolder(private val binding: ListItemCertificateBinding) :
         RecyclerView.ViewHolder(binding.root) {
