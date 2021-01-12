@@ -1,4 +1,4 @@
-package com.example.myportfolio.fragments.bottom_nav_fragments.certificate
+package com.example.myportfolio.fragments.certificate
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

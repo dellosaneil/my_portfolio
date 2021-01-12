@@ -11,7 +11,7 @@ import com.example.myportfolio.data.CertificateData
 interface CertificateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addCertificate(certificate : CertificateData)
+    suspend fun insertCertificate(certificate : CertificateData)
 
     @Query("SELECT * FROM certificate_table")
     fun retrieveCertificateList() : LiveData<List<CertificateData>>

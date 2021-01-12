@@ -1,4 +1,4 @@
-package com.example.myportfolio.fragments.bottom_nav_fragments.profile
+package com.example.myportfolio.fragments.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.myportfolio.fragments.bottom_nav_fragments.profile.ProfileFragment"
+        android:name="com.example.myportfolio.fragments.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/projectsFragment"
-        android:name="com.example.myportfolio.fragments.bottom_nav_fragments.ProjectsFragment"
+        android:name="com.example.myportfolio.fragments.projects.ProjectsFragment"
         android:label="fragment_projects"
         tools:layout="@layout/fragment_projects" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.myportfolio.fragments.bottom_nav_fragments.SettingsFragment"
+        android:name="com.example.myportfolio.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/certificateFragment"
-        android:name="com.example.myportfolio.fragments.bottom_nav_fragments.certificate.CertificateFragment"
+        android:name="com.example.myportfolio.fragments.certificate.CertificateFragment"
         android:label="fragment_certificate"
         tools:layout="@layout/fragment_certificate" />
 </navigation>

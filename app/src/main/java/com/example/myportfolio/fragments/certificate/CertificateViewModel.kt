@@ -1,4 +1,4 @@
-package com.example.myportfolio.fragments.bottom_nav_fragments.certificate
+package com.example.myportfolio.fragments.certificate
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
