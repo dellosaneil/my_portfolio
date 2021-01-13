@@ -64,8 +64,5 @@ class ProjectsAdapter : RecyclerView.Adapter<ProjectsAdapter.ProjectsViewModel>(
                 .load(R.drawable.ic_news_tracker)
                 .into(binding.projectsImage)
         }
-
     }
-
-
 }

@@ -11,6 +11,7 @@ data class CertificateData(
     val certificateTitle : String,
     val companyName: String,
     val credentialId: String,
-    val credentialUrl: String,
-    @PrimaryKey(autoGenerate = true) val id : Int = 0
-) : Parcelable
+    val credentialUrl: String
+) : Parcelable {
+    @PrimaryKey(autoGenerate = true) var id : Int = 0
+}

@@ -5,10 +5,10 @@ import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
 import java.io.ByteArrayOutputStream
 
-class EntityTypeConverter {
+class Converters {
 
     @TypeConverter
-    fun fromBitmap(bitmap : Bitmap) : ByteArray{
+    fun fromBitmap(bitmap : Bitmap) : ByteArray {
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100 , stream)
         return stream.toByteArray()
@@ -16,5 +16,4 @@ class EntityTypeConverter {
 
     @TypeConverter
     fun toBitmap(byteArray: ByteArray) : Bitmap = BitmapFactory.decodeByteArray(byteArray, 0 , byteArray.size)
-
 }

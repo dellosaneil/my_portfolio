@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.myportfolio.R
 import com.example.myportfolio.data.CertificateData
 import com.example.myportfolio.databinding.ListItemCertificateBinding
@@ -49,7 +50,6 @@ class CertificateAdapter : RecyclerView.Adapter<CertificateAdapter.CertificateVi
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
             oldList[oldItemPosition] == newList[newItemPosition]
-
     }
 
 
@@ -62,11 +62,17 @@ class CertificateAdapter : RecyclerView.Adapter<CertificateAdapter.CertificateVi
         }
 
         private fun setCertificateLogo(companyName: String) {
-            when (companyName) {
-                "Coursera" -> binding.certificateLogo.setImageResource(R.drawable.ic_coursera)
-                "Udemy" -> binding.certificateLogo.setImageResource(R.drawable.ic_udemy)
-                else -> binding.certificateLogo.setImageResource(R.drawable.ic_classroom)
+            val image: Int = when (companyName) {
+                "Coursera" -> R.drawable.ic_coursera
+                "Udemy" -> R.drawable.ic_udemy
+                else -> R.drawable.ic_classroom
             }
+
+            Glide.with(binding.root.context)
+                .load(image)
+                .into(binding.certificateLogo)
         }
+
+
     }
 }

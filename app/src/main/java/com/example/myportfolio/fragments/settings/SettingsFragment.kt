@@ -1,4 +1,4 @@
-package com.example.myportfolio.fragments
+package com.example.myportfolio.fragments.settings
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

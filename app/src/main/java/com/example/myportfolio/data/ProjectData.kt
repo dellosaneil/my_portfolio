@@ -11,5 +11,6 @@ data class ProjectData(
     val projectDescription: String,
 //    val projectImage: Bitmap,
     val gitHubRepository : String = "",
-    @PrimaryKey(autoGenerate = true) val projectId: Int = 0
-)
+){
+    @PrimaryKey(autoGenerate = true) var projectId: Int = 0
+}
