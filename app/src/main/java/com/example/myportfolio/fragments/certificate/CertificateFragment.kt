@@ -37,17 +37,17 @@ class CertificateFragment : Fragment() {
             layoutManager = GridLayoutManager(requireContext(), 2)
             addItemDecoration(recyclerViewDecorator)
         }
-        populateRecyclerView()
+        updateRecyclerViewContents()
     }
 
-    private fun populateRecyclerView() {
+    private fun updateRecyclerViewContents() {
         certificateViewModel.certificateList().observe(viewLifecycleOwner, {
             certificateAdapter.setCertificateList(it)
         })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 }

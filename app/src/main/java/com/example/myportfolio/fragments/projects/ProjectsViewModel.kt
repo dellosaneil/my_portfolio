@@ -9,7 +9,7 @@ import com.example.myportfolio.repository.ProjectsRepository
 class ProjectsViewModel @ViewModelInject constructor(private val repository: ProjectsRepository) :
     ViewModel() {
 
-    private var mProjectList: LiveData<ProjectData> = repository.retrieveAllProjects()
+    private var mProjectList: LiveData<List<ProjectData>> = repository.retrieveProjects()
 
     fun projectList() = mProjectList
 

@@ -13,7 +13,7 @@ interface ProjectDao {
     suspend fun insertProject(project : ProjectData)
 
     @Query("SELECT * FROM projects_table")
-    fun retrieveAllProjects() : LiveData<ProjectData>
+    fun retrieveProjects() : LiveData<List<ProjectData>>
 
     @Query("DELETE FROM projects_table")
     suspend fun deleteAllProjects()

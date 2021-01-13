@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.example.myportfolio.data.CertificateData
 import com.example.myportfolio.repository.CertificateRepository
 
-class CertificateViewModel @ViewModelInject constructor(private val repository: CertificateRepository) : ViewModel(){
+class CertificateViewModel @ViewModelInject constructor(private val repository: CertificateRepository) :
+    ViewModel() {
 
     private var mCertificateList: LiveData<List<CertificateData>> =
         repository.retrieveCertificates()
@@ -23,6 +24,6 @@ class CertificateViewModel @ViewModelInject constructor(private val repository: 
         }
     }
 
-   suspend fun deleteCertificates() = repository.deleteAllCertificates()
+    suspend fun deleteCertificates() = repository.deleteAllCertificates()
 
 }

@@ -5,10 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".fragments.projects.ProjectsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/projects_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:listitem="@layout/list_item_project" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:id="@+id/project_insert"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"/>
+
 
 </FrameLayout>

@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey
 data class ProjectData(
     val projectTitle: String,
     val projectDescription: String,
-    val projectImage: Bitmap,
+//    val projectImage: Bitmap,
+    val gitHubRepository : String = "",
     @PrimaryKey(autoGenerate = true) val projectId: Int = 0
 )
