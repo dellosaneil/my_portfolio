@@ -3,7 +3,8 @@ package com.example.myportfolio.data
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "certificate_table")
@@ -13,5 +14,6 @@ data class CertificateData(
     val credentialId: String,
     val credentialUrl: String
 ) : Parcelable {
+    @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true) var id : Int = 0
 }

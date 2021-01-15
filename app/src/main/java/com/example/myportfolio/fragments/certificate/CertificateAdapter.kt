@@ -65,11 +65,12 @@ class CertificateAdapter : RecyclerView.Adapter<CertificateAdapter.CertificateVi
             val image: Int = when (companyName) {
                 "Coursera" -> R.drawable.ic_coursera
                 "Udemy" -> R.drawable.ic_udemy
-                else -> R.drawable.ic_classroom
+                else -> R.drawable.ic_certificates
             }
 
             Glide.with(binding.root.context)
                 .load(image)
+                .placeholder(R.drawable.ic_certificates)
                 .into(binding.certificateLogo)
         }
 

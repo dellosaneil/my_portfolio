@@ -11,4 +11,11 @@
 
     <string name="certificate_list_item_logo">a logo for the certificate provider</string>
     <string name="certificate_see_credential"><u>See Credential</u></string>
+
+    <string name="settings_dark_mode_summary">Enable Dark Mode</string>
+    <string name="settings_sync_network">Automatically sync portfolio to network</string>
+    <string name="settings_clear_data">Clears all the saved contents.</string>
+    <string name ="settings_category_storage">Storage</string>
+
+
 </resources>
