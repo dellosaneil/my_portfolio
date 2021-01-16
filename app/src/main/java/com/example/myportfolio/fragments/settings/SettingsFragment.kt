@@ -8,7 +8,10 @@ import androidx.preference.PreferenceFragmentCompat
 import com.example.myportfolio.R
 import com.example.myportfolio.repository.CertificateRepository
 import com.example.myportfolio.room.dao.CertificateDao
+import com.example.myportfolio.utility.Constants
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -18,7 +21,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
-
 
     @Inject
     lateinit var certificateRepository: CertificateRepository

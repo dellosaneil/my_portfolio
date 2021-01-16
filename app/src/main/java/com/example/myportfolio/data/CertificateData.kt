@@ -9,10 +9,10 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity(tableName = "certificate_table")
 data class CertificateData(
-    val certificateTitle : String,
-    val companyName: String,
-    val credentialId: String,
-    val credentialUrl: String
+    val certificateTitle : String = "",
+    val companyName: String = "",
+    val credentialId: String = "",
+    val credentialUrl: String = ""
 ) : Parcelable {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true) var id : Int = 0

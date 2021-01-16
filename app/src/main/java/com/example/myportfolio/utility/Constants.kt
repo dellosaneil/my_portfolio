@@ -8,6 +8,7 @@ class Constants {
         const val AUTO_UPDATE = "auto_update"
 
         const val CERTIFICATE_COLLECTION = "certificate"
+        const val CERTIFICATE_PATH_UPDATE = "update"
 
     }
 }

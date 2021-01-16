@@ -1,18 +1,23 @@
 package com.example.myportfolio.fragments.certificate
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.myportfolio.R
 import com.example.myportfolio.utility.RecyclerViewDecorator
 import com.example.myportfolio.databinding.FragmentCertificateBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CertificateFragment : Fragment() {
+class CertificateFragment : Fragment(){
 
     private var _binding: FragmentCertificateBinding? = null
     private val binding get() = _binding!!
@@ -27,7 +32,16 @@ class CertificateFragment : Fragment() {
         _binding = FragmentCertificateBinding.inflate(inflater, container, false)
         initializeRecyclerView()
         observeUpdate()
+        updateClickListener()
         return binding.root
+    }
+
+    private fun updateClickListener() {
+        binding.certificateUpdate.setOnClickListener {
+            lifecycleScope.launch(IO) {
+                certificateViewModel.updateCertificationList()
+            }
+        }
     }
 
     private fun observeUpdate() {
@@ -60,6 +74,7 @@ class CertificateFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        certificateViewModel.removeListeners()
         _binding = null
     }
 }

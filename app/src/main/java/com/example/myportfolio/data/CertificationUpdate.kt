@@ -1,3 +1,3 @@
 package com.example.myportfolio.data
 
-data class CertificationUpdate(val needUpdate : Boolean = false)
+data class CertificationUpdate(val needUpdate: Boolean = false)
