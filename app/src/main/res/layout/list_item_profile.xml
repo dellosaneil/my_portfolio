@@ -20,11 +20,13 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:padding="3dp"
+            android:fontFamily="@font/open_sans"
             android:textSize="26sp"
             tools:text="Hello There" />
 
         <com.google.android.material.textview.MaterialTextView
             android:lineSpacingExtra="6sp"
+            android:fontFamily="@font/open_sans"
             android:id="@+id/rv_profile_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

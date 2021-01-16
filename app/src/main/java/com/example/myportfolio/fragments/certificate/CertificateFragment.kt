@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.myportfolio.RecyclerViewDecorator
+import com.example.myportfolio.utility.RecyclerViewDecorator
 import com.example.myportfolio.data.CertificateData
 import com.example.myportfolio.databinding.FragmentCertificateBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,9 +30,8 @@ class CertificateFragment : Fragment() {
     ): View {
         _binding = FragmentCertificateBinding.inflate(inflater, container, false)
         initializeRecyclerView()
-        lifecycleScope.launch(IO) { certificateViewModel.updateCertificationList(
-            CertificateData("","","","")
-            ) }
+
+        certificateViewModel.checkUpdate()
 
         return binding.root
     }

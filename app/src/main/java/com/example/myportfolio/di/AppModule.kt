@@ -2,7 +2,7 @@ package com.example.myportfolio.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.myportfolio.Constants.Companion.DATABASE_NAME
+import com.example.myportfolio.utility.Constants.Companion.DATABASE_NAME
 import com.example.myportfolio.room.MyDatabase
 import com.example.myportfolio.room.dao.CertificateDao
 import com.example.myportfolio.room.dao.ProjectDao

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myportfolio.RecyclerViewDecorator
+import com.example.myportfolio.utility.RecyclerViewDecorator
 import com.example.myportfolio.databinding.FragmentProjectsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
