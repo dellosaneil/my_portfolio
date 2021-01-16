@@ -1,15 +1,17 @@
 package com.example.myportfolio.fragments.certificate
 
-import android.util.Log
+import android.widget.Toast
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.myportfolio.data.CertificateData
+import com.example.myportfolio.data.CertificationUpdate
 import com.example.myportfolio.repository.CertificateRepository
 import com.example.myportfolio.utility.Constants.Companion.CERTIFICATE_COLLECTION
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class CertificateViewModel @ViewModelInject constructor(private val repository: CertificateRepository) :
     ViewModel() {
@@ -34,23 +36,20 @@ class CertificateViewModel @ViewModelInject constructor(private val repository: 
             false
         }
     }
-
     private val TAG = "CertificateViewModel"
 
     suspend fun deleteCertificates() = repository.deleteAllCertificates()
 
     fun checkUpdate(){
-        val roomSize = certificateList().value?.size
-        val collectionDocuments = certificateReference.get()
-        collectionDocuments.addOnSuccessListener { documents ->
+        certificateReference.document("update").addSnapshotListener{snapShot , exception ->
             run {
-                if (roomSize == documents.size()) {
-                    Log.i(TAG, "is Equal")
+                if (exception != null) {
+                    _needUpdate.value = false
                 }else{
-                    Log.i(TAG, "needs Update")
+                    val temp = snapShot?.toObject(CertificationUpdate::class.java)
+                    _needUpdate.value = temp?.needUpdate
                 }
             }
         }
     }
-
 }

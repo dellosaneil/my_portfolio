@@ -6,14 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myportfolio.utility.RecyclerViewDecorator
-import com.example.myportfolio.data.CertificateData
 import com.example.myportfolio.databinding.FragmentCertificateBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CertificateFragment : Fragment() {
@@ -30,10 +26,19 @@ class CertificateFragment : Fragment() {
     ): View {
         _binding = FragmentCertificateBinding.inflate(inflater, container, false)
         initializeRecyclerView()
-
-        certificateViewModel.checkUpdate()
-
+        observeUpdate()
         return binding.root
+    }
+
+    private fun observeUpdate() {
+        certificateViewModel.checkUpdate()
+        certificateViewModel.needUpdate().observe(viewLifecycleOwner, {
+            if(it){
+                binding.certificateUpdate.visibility = View.VISIBLE
+            }else{
+                binding.certificateUpdate.visibility = View.GONE
+            }
+        })
     }
 
     private fun initializeRecyclerView() {
