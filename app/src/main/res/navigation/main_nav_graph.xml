@@ -24,5 +24,18 @@
         android:id="@+id/certificateFragment"
         android:name="com.example.myportfolio.fragments.certificate.CertificateFragment"
         android:label="fragment_certificate"
-        tools:layout="@layout/fragment_certificate" />
+        tools:layout="@layout/fragment_certificate" >
+        <action
+            android:id="@+id/certificateFragment_certificateCredential"
+            app:destination="@id/certificateCredential" />
+    </fragment>
+    <fragment
+        android:id="@+id/certificateCredential"
+        android:name="com.example.myportfolio.fragments.certificate.CertificateCredential"
+        android:label="fragment_certificate_credential"
+        tools:layout="@layout/fragment_certificate_credential" >
+        <action
+            android:id="@+id/certificateCredential_certificateFragment"
+            app:destination="@id/certificateFragment" />
+    </fragment>
 </navigation>

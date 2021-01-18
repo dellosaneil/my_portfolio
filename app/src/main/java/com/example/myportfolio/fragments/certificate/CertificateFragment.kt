@@ -6,19 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myportfolio.R
-import com.example.myportfolio.utility.RecyclerViewDecorator
+import com.example.myportfolio.data.CertificateData
 import com.example.myportfolio.databinding.FragmentCertificateBinding
+import com.example.myportfolio.utility.Constants
+import com.example.myportfolio.utility.RecyclerViewDecorator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CertificateFragment : Fragment(), CertificateAdapter.CertificateDetailsListener {
+class CertificateFragment : Fragment(), CertificateAdapter.CertificateDetailsListener,
+    CertificateDialog.DialogEventListenerCredential {
 
     private var _binding: FragmentCertificateBinding? = null
     private val binding get() = _binding!!
@@ -82,9 +87,16 @@ class CertificateFragment : Fragment(), CertificateAdapter.CertificateDetailsLis
 
     override fun certificateDetailIndex(index: Int) {
         val details = certificateViewModel.certificateList().value?.get(index)
-        details?.let { certificateDialog = CertificateDialog(requireActivity(), it) }
+        details?.let {
+            certificateDialog = CertificateDialog(requireActivity(), it, this)
+            certificateDialog.showCertificateDetails()
+        }
             ?: Toast.makeText(requireContext(), "Error", Toast.LENGTH_LONG).show()
-        certificateDialog.showCertificateDetails()
+    }
+
+    override fun showWebView(details: CertificateData) {
+        val bundle = bundleOf(Constants.BUNDLE_CERTIFICATE_DETAILS to details)
+        Navigation.findNavController(binding.root).navigate(R.id.certificateFragment_certificateCredential, bundle)
     }
 
 

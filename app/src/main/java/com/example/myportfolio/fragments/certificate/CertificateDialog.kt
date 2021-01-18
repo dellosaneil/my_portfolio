@@ -7,30 +7,36 @@ import com.example.myportfolio.data.CertificateData
 import com.example.myportfolio.databinding.DialogCertificateDetailBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class CertificateDialog(private val activity : Activity, private val details : CertificateData) {
+class CertificateDialog(private val activity: Activity, private val details: CertificateData, private val listener : DialogEventListenerCredential) {
 
     private val binding = DialogCertificateDetailBinding.inflate(LayoutInflater.from(activity))
 
-    private fun initializeValues(){
+    private fun initializeValues() {
         binding.dialogCertificateTitle.text = details.certificateTitle
     }
 
-
-    fun showCertificateDetails(){
+    fun showCertificateDetails() {
         initializeValues()
         MaterialAlertDialogBuilder(activity)
             .setView(binding.root)
-            .setPositiveButton(R.string.certificate_dialog_positive) {_, _ ->
+            .setCancelable(false)
+            .setPositiveButton(R.string.certificate_dialog_positive) { dialog, _ ->
                 run {
-                    showWebView()
+                    listener.showWebView(details)
+                    dialog.dismiss()
                 }
             }
-            .setNegativeButton(R.string.certificate_dialog_negative, null)
+            .setNegativeButton(R.string.certificate_dialog_negative) { dialog, _ ->
+                run {
+                    dialog.dismiss()
+                }
+            }
             .show()
     }
 
-    private fun showWebView() {
-        TODO("Not yet implemented")
+    
+    interface DialogEventListenerCredential{
+        fun showWebView(details: CertificateData)
     }
 
 

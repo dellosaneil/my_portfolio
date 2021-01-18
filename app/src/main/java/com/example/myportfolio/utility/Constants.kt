@@ -11,5 +11,7 @@ class Constants {
         const val CERTIFICATE_COLLECTION = "certificate"
         const val CERTIFICATE_PATH_UPDATE = "update"
 
+        const val BUNDLE_CERTIFICATE_DETAILS = "details"
+
     }
 }

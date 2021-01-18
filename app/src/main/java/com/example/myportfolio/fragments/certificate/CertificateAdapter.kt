@@ -88,7 +88,6 @@ class CertificateAdapter(private val listener : CertificateDetailsListener) : Re
 
     interface CertificateDetailsListener{
         fun certificateDetailIndex(index : Int)
-
     }
 
 
