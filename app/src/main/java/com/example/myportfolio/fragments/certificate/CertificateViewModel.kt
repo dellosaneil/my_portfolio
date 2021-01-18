@@ -29,13 +29,18 @@ class CertificateViewModel @ViewModelInject constructor(private val repository: 
     fun needUpdate() = _needUpdate
     fun certificateList() = mCertificateList
 
+    /*
+    * Function gets called when FAB gets clicked. It will update the contents of the ROOM database
+    * */
     suspend fun updateCertificationList() {
         val documentCertificateData = mutableListOf<CertificateData>()
         val allDocuments = certificateReference.get()
         allDocuments.addOnSuccessListener {
             for (document in it.documents) {
-                val temp = document.toObject<CertificateData>()
-                temp?.let { documentCertificateData.add(temp) }
+                if(document.id != "update"){
+                    val temp = document.toObject<CertificateData>()
+                    temp?.let { documentCertificateData.add(temp) }
+                }
             }
         }.await()
         updateRoomDatabase(documentCertificateData)
@@ -54,6 +59,7 @@ class CertificateViewModel @ViewModelInject constructor(private val repository: 
         }
     }
 
+    /*Checks whether the application is up to date.*/
     fun checkUpdate() {
         updateCertificateUpdate = certificateReference.document(CERTIFICATE_PATH_UPDATE).addSnapshotListener { snapShot, exception ->
             run {
