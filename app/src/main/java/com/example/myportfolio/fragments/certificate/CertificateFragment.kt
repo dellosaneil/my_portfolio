@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -17,12 +18,13 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CertificateFragment : Fragment(){
+class CertificateFragment : Fragment(), CertificateAdapter.CertificateDetailsListener {
 
     private var _binding: FragmentCertificateBinding? = null
     private val binding get() = _binding!!
     private lateinit var certificateAdapter: CertificateAdapter
     private val certificateViewModel: CertificateViewModel by viewModels()
+    private lateinit var certificateDialog: CertificateDialog
 
 
     override fun onCreateView(
@@ -47,9 +49,9 @@ class CertificateFragment : Fragment(){
     private fun observeUpdate() {
         certificateViewModel.checkUpdate()
         certificateViewModel.needUpdate().observe(viewLifecycleOwner, {
-            if(it){
+            if (it) {
                 binding.certificateUpdate.visibility = View.VISIBLE
-            }else{
+            } else {
                 binding.certificateUpdate.visibility = View.GONE
             }
         })
@@ -57,7 +59,7 @@ class CertificateFragment : Fragment(){
 
     private fun initializeRecyclerView() {
         val recyclerViewDecorator = RecyclerViewDecorator(10)
-        certificateAdapter = CertificateAdapter()
+        certificateAdapter = CertificateAdapter(this)
         binding.certificatesRecyclerView.apply {
             adapter = certificateAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
@@ -77,4 +79,13 @@ class CertificateFragment : Fragment(){
         certificateViewModel.removeListeners()
         _binding = null
     }
+
+    override fun certificateDetailIndex(index: Int) {
+        val details = certificateViewModel.certificateList().value?.get(index)
+        details?.let { certificateDialog = CertificateDialog(requireActivity(), it) }
+            ?: Toast.makeText(requireContext(), "Error", Toast.LENGTH_LONG).show()
+        certificateDialog.showCertificateDetails()
+    }
+
+
 }

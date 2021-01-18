@@ -1,6 +1,7 @@
 package com.example.myportfolio.fragments.certificate
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +10,8 @@ import com.example.myportfolio.R
 import com.example.myportfolio.data.CertificateData
 import com.example.myportfolio.databinding.ListItemCertificateBinding
 
-class CertificateAdapter : RecyclerView.Adapter<CertificateAdapter.CertificateViewHolder>() {
+class CertificateAdapter(private val listener : CertificateDetailsListener) : RecyclerView.Adapter<CertificateAdapter.CertificateViewHolder>() {
+
     private var certificateList: List<CertificateData> = listOf()
 
     fun setCertificateList(newList: List<CertificateData>) {
@@ -54,7 +56,12 @@ class CertificateAdapter : RecyclerView.Adapter<CertificateAdapter.CertificateVi
 
 
     inner class CertificateViewHolder(private val binding: ListItemCertificateBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        init{
+            binding.root.setOnClickListener(this)
+        }
+
 
         fun bind(certificateData: CertificateData) {
             binding.certificateTitle.text = certificateData.certificateTitle
@@ -74,6 +81,15 @@ class CertificateAdapter : RecyclerView.Adapter<CertificateAdapter.CertificateVi
                 .into(binding.certificateLogo)
         }
 
+        override fun onClick(v: View?) {
+            listener.certificateDetailIndex(adapterPosition)
+        }
+    }
+
+    interface CertificateDetailsListener{
+        fun certificateDetailIndex(index : Int)
 
     }
+
+
 }
