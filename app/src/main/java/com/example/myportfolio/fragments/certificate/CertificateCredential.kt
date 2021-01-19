@@ -1,11 +1,15 @@
 package com.example.myportfolio.fragments.certificate
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.navigation.Navigation
 import com.example.myportfolio.R
 import com.example.myportfolio.data.CertificateData
@@ -29,12 +33,19 @@ class CertificateCredential : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun loadWebView(credentialUrl: String?) {
         credentialUrl?.let {
-            binding.webView
-                .loadUrl(it)
+            binding.webView.apply {
+                loadUrl(it)
+                settings.javaScriptEnabled = true
+                settings.displayZoomControls = true
+                settings.loadsImagesAutomatically = true
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    settings.safeBrowsingEnabled = true
+                }
+            }
         }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,6 +59,7 @@ class CertificateCredential : Fragment() {
                 .navigate(R.id.certificateCredential_certificateFragment)
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

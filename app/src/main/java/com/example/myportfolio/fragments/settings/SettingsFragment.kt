@@ -8,6 +8,7 @@ import androidx.preference.PreferenceFragmentCompat
 import com.example.myportfolio.R
 import com.example.myportfolio.data.CertificationUpdate
 import com.example.myportfolio.repository.CertificateRepository
+import com.example.myportfolio.repository.ProjectsRepository
 import com.example.myportfolio.utility.Constants.Companion.CERTIFICATE_COLLECTION
 import com.example.myportfolio.utility.Constants.Companion.CERTIFICATE_PATH_UPDATE
 import com.example.myportfolio.utility.Constants.Companion.CLEAR_DATABASE_KEY
@@ -26,6 +27,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     @Inject
     lateinit var certificateRepository: CertificateRepository
+    @Inject
+    lateinit var projectRepository : ProjectsRepository
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         if (preference?.key == CLEAR_DATABASE_KEY) {
@@ -56,6 +59,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun deleteCertificates() {
         lifecycleScope.launch(IO) {
             certificateRepository.deleteAllCertificates()
+            projectRepository.deleteAllProjects()
             withContext(Main) {
                 Toast.makeText(
                     requireContext(),

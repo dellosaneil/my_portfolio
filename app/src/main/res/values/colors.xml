@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="profile_text_background">#DCDCDC</color>
     <color name="hyper_link">#0000EE</color>
+    <color name="light_gray">#F8F8F8</color>
 </resources>

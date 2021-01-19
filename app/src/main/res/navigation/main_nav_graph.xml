@@ -14,7 +14,11 @@
         android:id="@+id/projectsFragment"
         android:name="com.example.myportfolio.fragments.projects.ProjectsFragment"
         android:label="fragment_projects"
-        tools:layout="@layout/fragment_projects" />
+        tools:layout="@layout/fragment_projects" >
+        <action
+            android:id="@+id/projectFragment_projectDetails"
+            app:destination="@id/projectDetails" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.myportfolio.fragments.settings.SettingsFragment"
@@ -37,5 +41,14 @@
         <action
             android:id="@+id/certificateCredential_certificateFragment"
             app:destination="@id/certificateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/projectDetails"
+        android:name="com.example.myportfolio.fragments.projects.ProjectDetails"
+        android:label="fragment_project_details"
+        tools:layout="@layout/fragment_project_details" >
+        <action
+            android:id="@+id/projectDetails_projectFragment"
+            app:destination="@id/projectsFragment" />
     </fragment>
 </navigation>

@@ -1,6 +1,7 @@
 package com.example.myportfolio.fragments.projects
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.example.myportfolio.data.ProjectData
 import com.example.myportfolio.databinding.ListItemProjectBinding
 
 
-class ProjectsAdapter : RecyclerView.Adapter<ProjectsAdapter.ProjectsViewModel>() {
+class ProjectsAdapter(private val listener : ProjectDetailListener) : RecyclerView.Adapter<ProjectsAdapter.ProjectsViewHolder>() {
 
     private var projectList: List<ProjectData> = listOf()
 
@@ -24,15 +25,15 @@ class ProjectsAdapter : RecyclerView.Adapter<ProjectsAdapter.ProjectsViewModel>(
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectsViewModel {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectsViewHolder {
         val binding = ListItemProjectBinding.inflate(
             LayoutInflater.from(parent.context),
             parent, false
         )
-        return ProjectsViewModel(binding)
+        return ProjectsViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ProjectsViewModel, position: Int) {
+    override fun onBindViewHolder(holder: ProjectsViewHolder, position: Int) {
         val data = projectList[position]
         holder.bind(data)
 
@@ -40,7 +41,7 @@ class ProjectsAdapter : RecyclerView.Adapter<ProjectsAdapter.ProjectsViewModel>(
 
     override fun getItemCount() = projectList.size
 
-    class DiffUtilCallbackProject(
+    private class DiffUtilCallbackProject(
         private val oldItem: List<ProjectData>,
         private val newItem: List<ProjectData>
     ) : DiffUtil.Callback() {
@@ -54,8 +55,12 @@ class ProjectsAdapter : RecyclerView.Adapter<ProjectsAdapter.ProjectsViewModel>(
     }
 
 
-    inner class ProjectsViewModel(private val binding: ListItemProjectBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class ProjectsViewHolder(private val binding: ListItemProjectBinding) :
+        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        init{
+            binding.projectsImage.setOnClickListener(this)
+        }
 
         fun bind(data: ProjectData) {
             binding.projectsName.text = data.projectTitle
@@ -64,5 +69,18 @@ class ProjectsAdapter : RecyclerView.Adapter<ProjectsAdapter.ProjectsViewModel>(
                 .load(R.drawable.ic_news_tracker)
                 .into(binding.projectsImage)
         }
+
+        override fun onClick(v: View?) {
+            when(v?.id){
+                R.id.projects_image -> listener.projectClickListener(adapterPosition)
+            }
+        }
     }
+
+    interface ProjectDetailListener{
+        fun projectClickListener(index : Int)
+    }
+
+
+
 }
