@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myportfolio.utility.RecyclerViewDecorator
 import com.example.myportfolio.data.ProfileData
 import com.example.myportfolio.databinding.FragmentProfileBinding
+import com.example.myportfolio.utility.FragmentLifecycleLog
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : FragmentLifecycleLog() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!

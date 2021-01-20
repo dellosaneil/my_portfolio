@@ -7,12 +7,10 @@
     android:orientation="vertical"
     tools:context=".fragments.projects.ProjectDetails">
 
-
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        app:cardBackgroundColor="@color/light_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,30 +20,30 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/projectDetails_languageUsed"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/photo_description"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_kotlin_big" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:orientation="horizontal"
                 android:weightSum="2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView">
+                app:layout_constraintTop_toBottomOf="@+id/projectDetails_languageUsed">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/projectDetails_github"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -57,6 +55,7 @@
                     app:iconGravity="textStart" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/projectDetails_openApp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -69,7 +68,7 @@
             </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/materialTextView"
+                android:id="@+id/projectDetails_projectName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -78,8 +77,8 @@
                 android:maxLines="2"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/projectDetails_languageUsed"
+                app:layout_constraintTop_toTopOf="@+id/projectDetails_languageUsed"
                 tools:text="@string/photo_description" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -87,30 +86,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="3"
-        android:padding="12dp"
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="4dp"
+        android:background="@color/light_gray"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        android:weightSum="3">
 
         <ImageView
             android:id="@+id/first_screenshot"
             android:layout_width="0dp"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
+            android:background="?android:selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/second_screenshot"
             android:layout_width="0dp"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
+            android:background="?android:selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/third_screenshot"
             android:layout_width="0dp"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
+            android:background="?android:selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             tools:ignore="ContentDescription" />
     </LinearLayout>
 
@@ -119,16 +128,13 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/projectDetails_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:textSize="16sp"
             android:fontFamily="@font/open_sans"
             android:lineSpacingExtra="2dp"
-            android:text="@string/lorem_text"/>
-
+            android:padding="12dp"
+            android:text="@string/lorem_text"
+            android:textSize="16sp" />
     </androidx.core.widget.NestedScrollView>
-
-
-
 </LinearLayout>

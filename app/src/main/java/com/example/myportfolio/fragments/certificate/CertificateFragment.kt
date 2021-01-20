@@ -16,13 +16,14 @@ import com.example.myportfolio.R
 import com.example.myportfolio.data.CertificateData
 import com.example.myportfolio.databinding.FragmentCertificateBinding
 import com.example.myportfolio.utility.Constants
+import com.example.myportfolio.utility.FragmentLifecycleLog
 import com.example.myportfolio.utility.RecyclerViewDecorator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CertificateFragment : Fragment(), CertificateAdapter.CertificateDetailsListener,
+class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.CertificateDetailsListener,
     CertificateDialog.DialogEventListenerCredential {
 
     private var _binding: FragmentCertificateBinding? = null

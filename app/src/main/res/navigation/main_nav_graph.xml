@@ -31,24 +31,30 @@
         tools:layout="@layout/fragment_certificate" >
         <action
             android:id="@+id/certificateFragment_certificateCredential"
-            app:destination="@id/certificateCredential" />
+            app:destination="@id/certificateWebView" />
     </fragment>
     <fragment
-        android:id="@+id/certificateCredential"
-        android:name="com.example.myportfolio.fragments.certificate.CertificateCredential"
+        android:id="@+id/certificateWebView"
+        android:name="com.example.myportfolio.fragments.certificate.CertificateWebView"
         android:label="fragment_certificate_credential"
         tools:layout="@layout/fragment_certificate_credential" >
-        <action
-            android:id="@+id/certificateCredential_certificateFragment"
-            app:destination="@id/certificateFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/projectDetails"
         android:name="com.example.myportfolio.fragments.projects.ProjectDetails"
         android:label="fragment_project_details"
         tools:layout="@layout/fragment_project_details" >
+
         <action
-            android:id="@+id/projectDetails_projectFragment"
-            app:destination="@id/projectsFragment" />
+            android:id="@+id/projectDetails_projectWebView"
+            app:destination="@id/projectWebView" />
+    </fragment>
+    <fragment
+        android:id="@+id/projectWebView"
+        android:name="com.example.myportfolio.fragments.projects.ProjectWebView"
+        android:label="fragment_project_web_view"
+        tools:layout="@layout/fragment_project_web_view" >
+
     </fragment>
 </navigation>

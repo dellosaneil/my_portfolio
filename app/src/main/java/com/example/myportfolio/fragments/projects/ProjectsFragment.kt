@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,13 +14,15 @@ import com.example.myportfolio.R
 import com.example.myportfolio.data.ProjectData
 import com.example.myportfolio.utility.RecyclerViewDecorator
 import com.example.myportfolio.databinding.FragmentProjectsBinding
+import com.example.myportfolio.utility.Constants.Companion.BUNDLE_PROJECT_DETAILS
+import com.example.myportfolio.utility.FragmentLifecycleLog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class ProjectsFragment : Fragment(), ProjectsAdapter.ProjectDetailListener {
+class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailListener {
 
     private var _binding: FragmentProjectsBinding? = null
     private val binding get() = _binding!!
@@ -33,7 +36,7 @@ class ProjectsFragment : Fragment(), ProjectsAdapter.ProjectDetailListener {
         _binding = FragmentProjectsBinding.inflate(inflater, container, false)
         initializeRecyclerView()
         lifecycleScope.launch(IO){
-            projectViewModel.insertProject(ProjectData("Test Project", resources.getString(R.string.lorem_text), "asmkldnl"))
+            projectViewModel.insertProject(ProjectData("Test Project", resources.getString(R.string.lorem_text), "https://github.com/dellosaneil/my_portfolio"))
         }
         return binding.root
     }
@@ -65,6 +68,7 @@ class ProjectsFragment : Fragment(), ProjectsAdapter.ProjectDetailListener {
     }
 
     override fun projectClickListener(index: Int) {
-        Navigation.findNavController(binding.root).navigate(R.id.projectFragment_projectDetails)
+        val bundle = bundleOf(BUNDLE_PROJECT_DETAILS to (projectViewModel.projectList().value?.get(index)))
+        Navigation.findNavController(binding.root).navigate(R.id.projectFragment_projectDetails, bundle)
     }
 }
