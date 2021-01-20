@@ -3,20 +3,20 @@
 
     <item android:id="@+id/profileFragment"
         android:title="@string/nav_graph_profile"
-        android:icon="@drawable/ic_user"/>
+        android:icon="@drawable/ic_user_24"/>
 
     <item android:id="@+id/certificateFragment"
         android:title="@string/nav_graph_certificates"
-        android:icon="@drawable/ic_certificates"/>
+        android:icon="@drawable/ic_certificates_24"/>
 
     <item android:id="@+id/projectsFragment"
         android:title="@string/nav_graph_projects"
-        android:icon="@drawable/ic_briefcase"/>
+        android:icon="@drawable/ic_briefcase_24"/>
 
 
     <item android:id="@+id/settingsFragment"
         android:title="@string/nav_graph_settings"
-        android:icon="@drawable/ic_settings"/>
+        android:icon="@drawable/ic_settings_24"/>
 
 
 

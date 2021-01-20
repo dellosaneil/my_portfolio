@@ -37,7 +37,7 @@
         android:id="@+id/certificateWebView"
         android:name="com.example.myportfolio.fragments.certificate.CertificateWebView"
         android:label="fragment_certificate_credential"
-        tools:layout="@layout/fragment_certificate_credential" >
+        tools:layout="@layout/fragment_certificate_webview" >
 
     </fragment>
     <fragment

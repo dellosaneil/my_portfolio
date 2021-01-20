@@ -51,7 +51,7 @@
                     android:layout_weight="1"
                     android:text="@string/project_details_github"
                     android:textAllCaps="false"
-                    app:icon="@drawable/ic_github"
+                    app:icon="@drawable/ic_github_16"
                     app:iconGravity="textStart" />
 
                 <com.google.android.material.button.MaterialButton
@@ -63,7 +63,7 @@
                     android:layout_weight="1"
                     android:text="@string/project_details_open_application"
                     android:textAllCaps="false"
-                    app:icon="@drawable/ic_phone_android"
+                    app:icon="@drawable/ic_phone_android_16"
                     app:iconGravity="textStart" />
             </LinearLayout>
 

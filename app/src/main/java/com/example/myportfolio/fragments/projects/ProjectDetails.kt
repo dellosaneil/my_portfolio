@@ -1,7 +1,6 @@
 package com.example.myportfolio.fragments.projects
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.example.myportfolio.R
 import com.example.myportfolio.data.ProjectData
 import com.example.myportfolio.databinding.FragmentProjectDetailsBinding
-import com.example.myportfolio.databinding.FragmentProjectsBinding
 import com.example.myportfolio.utility.Constants.Companion.BUNDLE_PROJECT_DETAILS
 import com.example.myportfolio.utility.Constants.Companion.BUNDLE_TO_WEB_VIEW_DETAILS
 import com.example.myportfolio.utility.FragmentLifecycleLog
@@ -27,11 +25,6 @@ class ProjectDetails : FragmentLifecycleLog() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProjectDetailsBinding.inflate(inflater, container, false)
-        val details = arguments?.getParcelable<ProjectData>(BUNDLE_PROJECT_DETAILS)
-        binding.projectDetailsGithub.setOnClickListener {
-            val bundle = bundleOf(BUNDLE_TO_WEB_VIEW_DETAILS to details)
-            Navigation.findNavController(binding.root).navigate(R.id.projectDetails_projectWebView, bundle)
-        }
 
         return binding.root
     }
@@ -39,25 +32,37 @@ class ProjectDetails : FragmentLifecycleLog() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         placeScreenshots()
-        binding.projectDetailsProjectName.text = "News Tracking Application"
+        val details = arguments?.getParcelable<ProjectData>(BUNDLE_PROJECT_DETAILS)
+        binding.projectDetailsGithub.setOnClickListener {
+            val bundle = bundleOf(BUNDLE_TO_WEB_VIEW_DETAILS to details)
+            Navigation.findNavController(view)
+                .navigate(R.id.projectDetails_projectWebView, bundle)
+        }
+
+        details?.projectTitle.let { binding.projectDetailsProjectName.text = it }
     }
 
     private fun placeScreenshots() {
-        Glide.with(binding.root.context)
-            .load(R.drawable.ic_news_tracker)
-            .into(binding.firstScreenshot)
+        val drawableArray = arrayOf(
+            R.drawable.ic_news_tracker,
+            R.drawable.ic_news_tracker,
+            R.drawable.ic_news_tracker,
+            R.drawable.ic_kotlin_big_48
+        )
+        val viewArray = arrayOf(
+            binding.firstScreenshot,
+            binding.secondScreenshot,
+            binding.thirdScreenshot,
+            binding.projectDetailsLanguageUsed
+        )
 
-        Glide.with(binding.root.context)
-            .load(R.drawable.ic_news_tracker)
-            .into(binding.secondScreenshot)
-
-        Glide.with(binding.root.context)
-            .load(R.drawable.ic_news_tracker)
-            .into(binding.thirdScreenshot)
-
-        Glide.with(binding.root.context)
-            .load(R.drawable.ic_kotlin_big)
-            .into(binding.projectDetailsLanguageUsed)
+        repeat(4) { index ->
+            run {
+                Glide.with(binding.root.context)
+                    .load(drawableArray[index])
+                    .into(viewArray[index])
+            }
+        }
     }
 
     override fun onDestroyView() {

@@ -77,7 +77,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/projects_name"
             app:layout_constraintStart_toEndOf="@+id/projects_image"
             app:layout_constraintTop_toTopOf="@+id/projects_name"
-            app:srcCompat="@drawable/ic_kotlin" />
+            app:srcCompat="@drawable/ic_kotlin_24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

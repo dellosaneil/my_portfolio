@@ -80,12 +80,6 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
         })
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        certificateViewModel.removeListeners()
-        _binding = null
-    }
-
     override fun certificateDetailIndex(index: Int) {
         val details = certificateViewModel.certificateList().value?.get(index)
         details?.let {
@@ -99,6 +93,14 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
         val bundle = bundleOf(Constants.BUNDLE_CERTIFICATE_DETAILS to details)
         Navigation.findNavController(binding.root).navigate(R.id.certificateFragment_certificateCredential, bundle)
     }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        certificateViewModel.removeListeners()
+        _binding = null
+    }
+
 
 
 }

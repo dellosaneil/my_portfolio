@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.myportfolio.R
@@ -20,15 +21,19 @@ class ProjectWebView : FragmentLifecycleLog() {
     private var _binding: FragmentProjectWebViewBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProjectWebViewBinding.inflate(inflater, container, false)
         val details = arguments?.getParcelable<ProjectData>(BUNDLE_TO_WEB_VIEW_DETAILS)
+        labelToolbar(details?.projectTitle)
         initializeWebView(details?.gitHubRepository)
         return binding.root
+    }
+
+    private fun labelToolbar(projectTitle: String?) {
+        projectTitle?.let{binding.projectWebViewToolBar.title = it} ?: onDestroyView()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,6 +42,22 @@ class ProjectWebView : FragmentLifecycleLog() {
             Navigation.findNavController(view).navigateUp()
         }
     }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                if(binding.projectWebViewWebView.canGoBack()){
+                    binding.projectWebViewWebView.goBack()
+                }else{
+                    isEnabled = false
+                    activity?.onBackPressed()
+                }
+            }
+        })
+    }
+
 
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -51,16 +72,18 @@ class ProjectWebView : FragmentLifecycleLog() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     settings.safeBrowsingEnabled = true
                 }
-            }
+            } ?: onDestroyView()
         }
     }
+
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding.projectWebViewWebView.destroy()
         _binding = null
     }
-
 
 
     inner class WebViewClient : android.webkit.WebViewClient() {

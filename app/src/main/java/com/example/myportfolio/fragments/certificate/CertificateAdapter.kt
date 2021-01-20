@@ -70,14 +70,14 @@ class CertificateAdapter(private val listener : CertificateDetailsListener) : Re
 
         private fun setCertificateLogo(companyName: String) {
             val image: Int = when (companyName) {
-                "Coursera" -> R.drawable.ic_coursera
-                "Udemy" -> R.drawable.ic_udemy
-                else -> R.drawable.ic_certificates
+                "Coursera" -> R.drawable.ic_coursera_48
+                "Udemy" -> R.drawable.ic_udemy_48
+                else -> R.drawable.ic_certificates_24
             }
 
             Glide.with(binding.root.context)
                 .load(image)
-                .placeholder(R.drawable.ic_certificates)
+                .placeholder(R.drawable.ic_certificates_24)
                 .into(binding.certificateLogo)
         }
 
