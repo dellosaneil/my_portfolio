@@ -11,6 +11,7 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
 
     private var mProjectList: LiveData<List<ProjectData>> = repository.retrieveProjects()
 
+
     fun projectList() = mProjectList
 
     suspend fun clearProjectTable() = repository.deleteAllProjects()

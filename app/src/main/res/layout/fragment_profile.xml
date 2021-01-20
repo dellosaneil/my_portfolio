@@ -36,14 +36,13 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/dialogCertificate_company"
+                    android:id="@+id/dialogCertificate_face"
                     android:layout_gravity="center"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginTop="12dp"
                     android:scaleType="centerCrop"
-                    app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView"
-                    app:srcCompat="@drawable/cat" />
+                    app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
             </LinearLayout>
 
             <com.google.android.material.appbar.MaterialToolbar

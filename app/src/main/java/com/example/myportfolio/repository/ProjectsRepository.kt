@@ -10,5 +10,4 @@ class ProjectsRepository @Inject constructor(private val dao: ProjectDao) {
     fun retrieveProjects() = dao.retrieveProjects()
     suspend fun deleteAllProjects() = dao.deleteAllProjects()
 
-
 }

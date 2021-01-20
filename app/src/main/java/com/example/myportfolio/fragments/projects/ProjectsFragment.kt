@@ -1,21 +1,21 @@
 package com.example.myportfolio.fragments.projects
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myportfolio.R
 import com.example.myportfolio.data.ProjectData
-import com.example.myportfolio.utility.RecyclerViewDecorator
 import com.example.myportfolio.databinding.FragmentProjectsBinding
 import com.example.myportfolio.utility.Constants.Companion.BUNDLE_PROJECT_DETAILS
 import com.example.myportfolio.utility.FragmentLifecycleLog
+import com.example.myportfolio.utility.RecyclerViewDecorator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -35,8 +35,17 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
     ): View {
         _binding = FragmentProjectsBinding.inflate(inflater, container, false)
         initializeRecyclerView()
-        lifecycleScope.launch(IO){
-            projectViewModel.insertProject(ProjectData("Test Project", resources.getString(R.string.lorem_text), "https://github.com/dellosaneil/my_portfolio"))
+        lifecycleScope.launch(IO) {
+            val icon = BitmapFactory.decodeResource(resources, R.drawable.ic_news_tracker)
+
+            projectViewModel.insertProject(
+                ProjectData(
+                    "Test Project",
+                    resources.getString(R.string.lorem_text),
+                    icon,
+                    "https://github.com/dellosaneil/my_portfolio"
+                )
+            )
         }
         return binding.root
     }
@@ -55,7 +64,7 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
     private fun updateRecyclerViewContents() {
         projectViewModel.projectList().observe(viewLifecycleOwner, {
             projectsAdapter.setProjectList(it)
-            if(it.isNotEmpty()){
+            if (it.isNotEmpty()) {
                 binding.projectsRecyclerView.smoothScrollToPosition(it.size - 1)
             }
 
@@ -68,7 +77,14 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
     }
 
     override fun projectClickListener(index: Int) {
-        val bundle = bundleOf(BUNDLE_PROJECT_DETAILS to (projectViewModel.projectList().value?.get(index)))
-        Navigation.findNavController(binding.root).navigate(R.id.projectFragment_projectDetails, bundle)
+        val bundle = bundleOf(
+            BUNDLE_PROJECT_DETAILS to (projectViewModel.projectList().value?.get(
+                index
+            ))
+        )
+        Navigation.findNavController(binding.root).navigate(
+            R.id.projectFragment_projectDetails,
+            bundle
+        )
     }
 }

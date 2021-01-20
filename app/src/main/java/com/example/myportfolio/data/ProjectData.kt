@@ -1,5 +1,6 @@
 package com.example.myportfolio.data
 
+import android.graphics.Bitmap
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -12,7 +13,7 @@ import kotlinx.parcelize.Parcelize
 data class ProjectData(
     val projectTitle: String,
     val projectDescription: String,
-//    val projectImage: Bitmap,
+    val projectImage: Bitmap? = null,
     val gitHubRepository: String = "",
 ) : Parcelable {
     @IgnoredOnParcel

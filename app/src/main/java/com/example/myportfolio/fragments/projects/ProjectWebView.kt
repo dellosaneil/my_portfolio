@@ -33,7 +33,7 @@ class ProjectWebView : FragmentLifecycleLog() {
     }
 
     private fun labelToolbar(projectTitle: String?) {
-        projectTitle?.let{binding.projectWebViewToolBar.title = it} ?: onDestroyView()
+        projectTitle?.let { binding.projectWebViewToolBar.title = it } ?: onDestroyView()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,18 +46,17 @@ class ProjectWebView : FragmentLifecycleLog() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true){
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if(binding.projectWebViewWebView.canGoBack()){
+                if (binding.projectWebViewWebView.canGoBack()) {
                     binding.projectWebViewWebView.goBack()
-                }else{
+                } else {
                     isEnabled = false
                     activity?.onBackPressed()
                 }
             }
         })
     }
-
 
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -75,8 +74,6 @@ class ProjectWebView : FragmentLifecycleLog() {
             } ?: onDestroyView()
         }
     }
-
-
 
 
     override fun onDestroyView() {
@@ -98,5 +95,4 @@ class ProjectWebView : FragmentLifecycleLog() {
             binding.projectWebViewWebView.visibility = View.VISIBLE
         }
     }
-
 }

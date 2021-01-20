@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.example.myportfolio.R
 import com.example.myportfolio.utility.RecyclerViewDecorator
 import com.example.myportfolio.data.ProfileData
 import com.example.myportfolio.databinding.FragmentProfileBinding
@@ -27,7 +29,17 @@ class ProfileFragment : FragmentLifecycleLog() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        placeImage(view)
+    }
 
+    private fun placeImage(view: View) {
+        Glide.with(view)
+            .load(R.drawable.cat)
+            .placeholder(R.drawable.ic_certificates_24)
+            .into(binding.dialogCertificateFace)
+    }
 
 
     private fun initializeRecyclerView() {

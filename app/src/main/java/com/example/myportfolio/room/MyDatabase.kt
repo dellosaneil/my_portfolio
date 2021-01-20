@@ -9,7 +9,7 @@ import com.example.myportfolio.room.dao.CertificateDao
 import com.example.myportfolio.room.dao.ProjectDao
 
 
-@Database(entities = [CertificateData::class, ProjectData::class], version = 4, exportSchema = false)
+@Database(entities = [CertificateData::class, ProjectData::class], version = 9, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class MyDatabase : RoomDatabase() {
     abstract fun certificateDao(): CertificateDao
