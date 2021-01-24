@@ -6,12 +6,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.example.myportfolio.R
-import com.example.myportfolio.data.CertificationUpdate
 import com.example.myportfolio.repository.CertificateRepository
 import com.example.myportfolio.repository.ProjectsRepository
-import com.example.myportfolio.utility.Constants.Companion.CERTIFICATE_COLLECTION
-import com.example.myportfolio.utility.Constants.Companion.CERTIFICATE_PATH_UPDATE
+import com.example.myportfolio.utility.Constants.Companion.UPDATE
+import com.example.myportfolio.utility.Constants.Companion.CHECK_UPDATE_COLLECTION
 import com.example.myportfolio.utility.Constants.Companion.CLEAR_DATABASE_KEY
+import com.example.myportfolio.utility.Constants.Companion.UPDATE_CERTIFICATION
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -68,9 +68,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 )
                     .show()
             }
-            val temp = CertificationUpdate(true)
-            Firebase.firestore.collection(CERTIFICATE_COLLECTION).document(CERTIFICATE_PATH_UPDATE)
-                .set(temp)
+            val changeState = mapOf(UPDATE to true)
+            Firebase.firestore.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_CERTIFICATION)
+                .set(changeState)
         }
     }
 }

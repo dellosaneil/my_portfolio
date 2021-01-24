@@ -81,5 +81,8 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 //    Preference
     implementation "androidx.preference:preference-ktx:$preference_version"
+//    Firebase Storage
+    implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation platform('com.google.firebase:firebase-bom:26.3.0')
 
 }

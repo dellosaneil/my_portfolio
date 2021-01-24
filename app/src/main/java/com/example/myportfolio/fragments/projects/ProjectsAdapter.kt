@@ -67,7 +67,7 @@ class ProjectsAdapter(private val listener : ProjectDetailListener) : RecyclerVi
             binding.projectsDescription.text = data.projectDescription
 
             Glide.with(binding.root.context)
-                .load(R.drawable.ic_news_tracker)
+                .load(data.projectImage)
                 .into(binding.projectsImage)
         }
 

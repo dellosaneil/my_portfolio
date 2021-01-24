@@ -19,5 +19,7 @@ interface ProjectDao {
     @Query("DELETE FROM projects_table")
     suspend fun deleteAllProjects()
 
+    @Query("SELECT projectTitle FROM projects_table")
+    fun retrieveProjectTitles() : List<String>
 
 }

@@ -2,6 +2,7 @@ package com.example.myportfolio.fragments.projects
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,18 +36,11 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
     ): View {
         _binding = FragmentProjectsBinding.inflate(inflater, container, false)
         initializeRecyclerView()
-        lifecycleScope.launch(IO) {
-            val icon = BitmapFactory.decodeResource(resources, R.drawable.ic_news_tracker)
 
-            projectViewModel.insertProject(
-                ProjectData(
-                    "Test Project",
-                    resources.getString(R.string.lorem_text),
-                    icon,
-                    "https://github.com/dellosaneil/my_portfolio"
-                )
-            )
+        lifecycleScope.launch(IO){
+            projectViewModel.updateProjectList()
         }
+
         return binding.root
     }
 

@@ -1,5 +1,6 @@
 package com.example.myportfolio.fragments.projects
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,8 +32,9 @@ class ProjectDetails : FragmentLifecycleLog() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        placeScreenshots()
+
         val details = arguments?.getParcelable<ProjectData>(BUNDLE_PROJECT_DETAILS)
+        placeScreenshots(details?.projectImage)
         binding.projectDetailsGithub.setOnClickListener {
             val bundle = bundleOf(BUNDLE_TO_WEB_VIEW_DETAILS to details)
             Navigation.findNavController(view)
@@ -42,9 +44,9 @@ class ProjectDetails : FragmentLifecycleLog() {
         details?.projectTitle.let { binding.projectDetailsProjectName.text = it }
     }
 
-    private fun placeScreenshots() {
+    private fun placeScreenshots(projectImage: Bitmap?) {
         val drawableArray = arrayOf(
-            R.drawable.ic_news_tracker,
+            projectImage,
             R.drawable.ic_news_tracker,
             R.drawable.ic_news_tracker,
             R.drawable.ic_kotlin_big_48

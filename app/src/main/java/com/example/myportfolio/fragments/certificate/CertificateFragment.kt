@@ -94,13 +94,9 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
         Navigation.findNavController(binding.root).navigate(R.id.certificateFragment_certificateCredential, bundle)
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         certificateViewModel.removeListeners()
         _binding = null
     }
-
-
-
 }
