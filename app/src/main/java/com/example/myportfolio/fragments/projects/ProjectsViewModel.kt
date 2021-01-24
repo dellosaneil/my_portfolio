@@ -55,6 +55,8 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
                 data.name,
                 data.description,
                 bitmap,
+                data.secondImage,
+                data.thirdImage,
                 data.github
             )
             insertProject(tempProjectData)

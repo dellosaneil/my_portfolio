@@ -11,10 +11,12 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "projects_table")
 @Parcelize
 data class ProjectData(
-    val projectLanguage : String ="",
+    val projectLanguage: String = "",
     val projectTitle: String = "",
     val projectDescription: String = "",
     val projectImage: Bitmap? = null,
+    val secondImageReference: String = "",
+    val thirdImageReference: String = "",
     val gitHubRepository: String = "",
 ) : Parcelable {
     @IgnoredOnParcel
