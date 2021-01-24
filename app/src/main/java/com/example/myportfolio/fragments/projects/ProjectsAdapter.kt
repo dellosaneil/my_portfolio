@@ -82,6 +82,4 @@ class ProjectsAdapter(private val listener : ProjectDetailListener) : RecyclerVi
         fun projectClickListener(index : Int)
     }
 
-
-
 }

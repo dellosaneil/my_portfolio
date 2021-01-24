@@ -20,6 +20,7 @@ import com.example.myportfolio.utility.RecyclerViewDecorator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
@@ -36,9 +37,15 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
     ): View {
         _binding = FragmentProjectsBinding.inflate(inflater, container, false)
         initializeRecyclerView()
-
-        lifecycleScope.launch(IO){
-            projectViewModel.updateProjectList()
+        projectViewModel.currentState().observe(viewLifecycleOwner) {
+            if (it) {
+                binding.projectProgressBar.visibility = View.VISIBLE
+                lifecycleScope.launch(IO) {
+                    projectViewModel.updateProjectList()
+                }
+            }else{
+                binding.projectProgressBar.visibility = View.INVISIBLE
+            }
         }
 
         return binding.root
@@ -67,6 +74,7 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
 
     override fun onDestroyView() {
         super.onDestroyView()
+        projectViewModel.removeListener()
         _binding = null
     }
 

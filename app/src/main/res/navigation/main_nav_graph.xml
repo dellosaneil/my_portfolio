@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/projectDetails"
-        android:name="com.example.myportfolio.fragments.projects.ProjectDetails"
+        android:name="com.example.myportfolio.fragments.projects.projectDetails.ProjectDetails"
         android:label="fragment_project_details"
         tools:layout="@layout/fragment_project_details" >
 

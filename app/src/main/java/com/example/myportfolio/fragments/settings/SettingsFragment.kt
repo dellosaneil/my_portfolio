@@ -12,6 +12,7 @@ import com.example.myportfolio.utility.Constants.Companion.UPDATE
 import com.example.myportfolio.utility.Constants.Companion.CHECK_UPDATE_COLLECTION
 import com.example.myportfolio.utility.Constants.Companion.CLEAR_DATABASE_KEY
 import com.example.myportfolio.utility.Constants.Companion.UPDATE_CERTIFICATION
+import com.example.myportfolio.utility.Constants.Companion.UPDATE_PROJECT
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -71,6 +72,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val changeState = mapOf(UPDATE to true)
             Firebase.firestore.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_CERTIFICATION)
                 .set(changeState)
+            Firebase.firestore.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_PROJECT).set(changeState)
         }
     }
 }

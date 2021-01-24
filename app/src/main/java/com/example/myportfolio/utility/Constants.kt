@@ -19,6 +19,7 @@ class Constants {
         const val UPDATE_CERTIFICATION = "certification"
 
         const val PROJECT_COLLECTION = "project"
+        const val UPDATE_PROJECT = "project"
 
 
 

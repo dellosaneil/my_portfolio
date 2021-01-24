@@ -1,4 +1,4 @@
-package com.example.myportfolio.fragments.projects
+package com.example.myportfolio.fragments.projects.projectDetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +20,6 @@ class ProjectDetails : FragmentLifecycleLog() {
     private var _binding: FragmentProjectDetailsBinding? = null
     private val binding get() = _binding!!
     private lateinit var projectDetailsViewModel: ProjectDetailsViewModel
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +58,6 @@ class ProjectDetails : FragmentLifecycleLog() {
             binding.thirdScreenshot,
             binding.projectDetailsLanguageUsed
         )
-
         projectDetailsViewModel.byteImages().observe(viewLifecycleOwner) {
             if (it.size >= 1) {
                 val index = it.size

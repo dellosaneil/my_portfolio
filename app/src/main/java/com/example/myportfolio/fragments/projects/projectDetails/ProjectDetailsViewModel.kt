@@ -1,16 +1,14 @@
-package com.example.myportfolio.fragments.projects
+package com.example.myportfolio.fragments.projects.projectDetails
 
-import android.util.Log
-import androidx.lifecycle.*
-import com.bumptech.glide.Glide
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.myportfolio.data.ProjectData
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-
-private const val TAG = "ProjectDetailsViewModel"
 
 class ProjectDetailsViewModel(private val projectData: ProjectData) : ViewModel() {
 
@@ -23,6 +21,7 @@ class ProjectDetailsViewModel(private val projectData: ProjectData) : ViewModel(
         return _byteImages
     }
 
+/*Retrieve image resource from Firebase Storage. As a ByteArray*/
     fun getFromStorage() {
         viewModelScope.launch(Dispatchers.IO) {
             repeat(2) {
@@ -31,12 +30,9 @@ class ProjectDetailsViewModel(private val projectData: ProjectData) : ViewModel(
                 storage.child(referenceLink).getBytes(maxBytes).addOnSuccessListener { image ->
                     val currentList = byteImages().value
                     currentList?.add(image)
-                    Log.i(TAG, "getFromStorage: $currentList")
-                    Log.i(TAG, "getFromStorage: $image")
                     _byteImages.value = currentList
                 }
             }
         }
     }
-
 }
