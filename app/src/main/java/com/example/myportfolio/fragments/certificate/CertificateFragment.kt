@@ -1,5 +1,6 @@
 package com.example.myportfolio.fragments.certificate
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -31,6 +32,7 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
     private lateinit var certificateAdapter: CertificateAdapter
     private val certificateViewModel: CertificateViewModel by viewModels()
     private lateinit var certificateDialog: CertificateDialog
+    private var canRefresh = false
 
 
     override fun onCreateView(
@@ -40,25 +42,29 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
         _binding = FragmentCertificateBinding.inflate(inflater, container, false)
         initializeRecyclerView()
         observeUpdate()
-        updateClickListener()
-        return binding.root
-    }
 
-    private fun updateClickListener() {
-        binding.certificateUpdate.setOnClickListener {
-            lifecycleScope.launch(IO) {
-                certificateViewModel.updateCertificationList()
+        binding.certificateRefresh.setOnRefreshListener {
+            lifecycleScope.launch(IO){
+                if(canRefresh) {
+                    certificateViewModel.updateCertificationList()
+                }else{
+                    binding.certificateRefresh.isRefreshing = false
+                }
             }
         }
+
+        return binding.root
     }
 
     private fun observeUpdate() {
         certificateViewModel.checkUpdate()
         certificateViewModel.needUpdate().observe(viewLifecycleOwner, {
-            if (it) {
-                binding.certificateUpdate.visibility = View.VISIBLE
-            } else {
-                binding.certificateUpdate.visibility = View.GONE
+            canRefresh = it
+            if (!it) {
+                binding.certificateRefresh.isRefreshing = false
+                binding.certificateTitle.setTextColor(Color.BLACK)
+            }else{
+                binding.certificateTitle.setTextColor(Color.GREEN)
             }
         })
     }
@@ -91,7 +97,8 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
 
     override fun showWebView(details: CertificateData) {
         val bundle = bundleOf(Constants.BUNDLE_CERTIFICATE_DETAILS to details)
-        Navigation.findNavController(binding.root).navigate(R.id.certificateFragment_certificateCredential, bundle)
+        Navigation.findNavController(binding.root)
+            .navigate(R.id.certificateFragment_certificateCredential, bundle)
     }
 
     override fun onDestroyView() {

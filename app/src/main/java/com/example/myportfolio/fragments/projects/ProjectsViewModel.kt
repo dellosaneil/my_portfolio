@@ -20,7 +20,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 
-private const val TAG = "ProjectsViewModel"
 
 class ProjectsViewModel @ViewModelInject constructor(private val repository: ProjectsRepository) :
     ViewModel() {
@@ -35,20 +34,20 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
 
     private val firestoreReference = Firebase.firestore
     private val storage = Firebase.storage.reference
-    private var firebaseStatusListener : ListenerRegistration
+    private var firebaseStatusListener: ListenerRegistration
 
     init {
-        firebaseStatusListener = firestoreReference.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_PROJECT)
-            .addSnapshotListener { snapshot, _ ->
-                run {
-                    val currentState = snapshot?.get(UPDATE).let { it as Boolean }
-                    _currentState.value = currentState
+        firebaseStatusListener =
+            firestoreReference.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_PROJECT)
+                .addSnapshotListener { snapshot, _ ->
+                    run {
+                        val currentState = snapshot?.get(UPDATE).let { it as Boolean }
+                        _currentState.value = currentState
+                    }
                 }
-            }
     }
 
     suspend fun updateProjectList() {
-        Log.i(TAG, "updateProjectList: ")
         val projectReference = firestoreReference.collection(PROJECT_COLLECTION)
         val documentTitles = repository.retrieveProjectTitles()
         val documentList = mutableListOf<ProjectFirebase>()
@@ -98,10 +97,7 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
 
     private suspend fun insertProject(project: ProjectData) = repository.insertProject(project)
 
-    fun removeListener(){
+    fun removeListener() {
         firebaseStatusListener.remove()
     }
-
-
-
 }
