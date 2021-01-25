@@ -111,7 +111,7 @@
                     android:padding="4dp"
                     android:weightSum="3">
 
-                    <ImageView
+                    <ImageButton
                         android:id="@+id/first_screenshot"
                         android:layout_width="0dp"
                         android:layout_height="100dp"
@@ -119,22 +119,25 @@
                         android:background="?android:selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
+                        android:scaleType="fitCenter"
                         tools:ignore="ContentDescription" />
 
-                    <ImageView
+                    <ImageButton
                         android:id="@+id/second_screenshot"
                         android:layout_width="0dp"
                         android:layout_height="100dp"
                         android:layout_weight="1"
+                        android:scaleType="fitCenter"
                         android:background="?android:selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
                         tools:ignore="ContentDescription" />
 
-                    <ImageView
+                    <ImageButton
                         android:id="@+id/third_screenshot"
                         android:layout_width="0dp"
                         android:layout_height="100dp"
+                        android:scaleType="fitCenter"
                         android:layout_weight="1"
                         android:background="?android:selectableItemBackground"
                         android:clickable="true"

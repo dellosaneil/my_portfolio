@@ -21,6 +21,9 @@ class Constants {
         const val PROJECT_COLLECTION = "project"
         const val UPDATE_PROJECT = "project"
 
+        const val BUCKET_LINK = "gs://fir-demo-138c6.appspot.com/"
+
+
 
 
     }
