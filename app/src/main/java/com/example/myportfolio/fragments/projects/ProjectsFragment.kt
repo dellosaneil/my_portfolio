@@ -1,8 +1,6 @@
 package com.example.myportfolio.fragments.projects
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myportfolio.R
-import com.example.myportfolio.data.ProjectData
 import com.example.myportfolio.databinding.FragmentProjectsBinding
 import com.example.myportfolio.utility.Constants.Companion.BUNDLE_PROJECT_DETAILS
 import com.example.myportfolio.utility.FragmentLifecycleLog
@@ -20,7 +17,6 @@ import com.example.myportfolio.utility.RecyclerViewDecorator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
