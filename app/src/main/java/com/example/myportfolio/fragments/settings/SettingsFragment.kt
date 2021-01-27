@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.createDataStore
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
@@ -31,8 +28,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -44,9 +43,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
     @Inject
     lateinit var projectRepository: ProjectsRepository
 
-    private val darkTheme = findPreference<SwitchPreferenceCompat>(DARK_THEME)
-    private val autoUpdate = findPreference<SwitchPreferenceCompat>(AUTO_UPDATE)
-    private var dataStore : DataStore<Preferences>? = null
+
+    private val TAG = "SettingsFragment"
+    private var darkTheme: SwitchPreferenceCompat? = null
+    private var autoUpdate: SwitchPreferenceCompat? = null
+    private var dataStore: DataStore<Preferences>? = null
 
     private var listener: Preference.OnPreferenceChangeListener? =
         Preference.OnPreferenceChangeListener { preference, newValue ->
@@ -62,6 +63,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataStore = context?.createDataStore(SETTINGS_PREFERENCE)!!
+        darkTheme = findPreference(DARK_THEME)
+        autoUpdate = findPreference(AUTO_UPDATE)
+        Log.i(TAG, "onCreate: $darkTheme DARK THEME")
         darkTheme?.onPreferenceChangeListener = listener
         autoUpdate?.onPreferenceChangeListener = listener
     }
@@ -70,6 +74,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         super.onDestroyView()
         listener = null
         dataStore = null
+        darkTheme = null
+        autoUpdate = null
     }
 
 
