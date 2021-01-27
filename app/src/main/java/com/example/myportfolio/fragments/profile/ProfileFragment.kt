@@ -26,6 +26,7 @@ class ProfileFragment : FragmentLifecycleLog() {
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         initializeRecyclerView()
+
         return binding.root
     }
 

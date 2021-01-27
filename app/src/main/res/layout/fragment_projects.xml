@@ -10,7 +10,7 @@
 
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/certificate_title"
+        android:id="@+id/projects_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/certificate_title"
+        app:layout_constraintTop_toBottomOf="@+id/projects_title"
         app:layout_scrollFlags="scroll|snap|exitUntilCollapsed" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

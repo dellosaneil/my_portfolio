@@ -34,9 +34,14 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
 
     private val firestoreReference = Firebase.firestore
     private val storage = Firebase.storage.reference
-    private var firebaseStatusListener: ListenerRegistration
+    private lateinit var firebaseStatusListener: ListenerRegistration
 
     init {
+        checkCurrentUpdateState()
+    }
+
+    /*Checks current status of update field*/
+    private fun checkCurrentUpdateState() {
         firebaseStatusListener =
             firestoreReference.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_PROJECT)
                 .addSnapshotListener { snapshot, _ ->
@@ -46,6 +51,7 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
                     }
                 }
     }
+
 
     suspend fun updateProjectList() {
         val projectReference = firestoreReference.collection(PROJECT_COLLECTION)
@@ -84,7 +90,7 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
         changeProjectState()
     }
 
-
+/*when updating is finished, check the status of update*/
     private fun changeProjectState() {
         val temp = mapOf(UPDATE to false)
         firestoreReference.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_PROJECT)

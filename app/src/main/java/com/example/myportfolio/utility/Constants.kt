@@ -23,6 +23,8 @@ class Constants {
 
         const val BUCKET_LINK = "gs://fir-demo-138c6.appspot.com/"
 
+        const val SETTINGS_PREFERENCE = "settings"
+
 
 
 

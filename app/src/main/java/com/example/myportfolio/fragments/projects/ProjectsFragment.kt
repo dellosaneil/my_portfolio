@@ -1,5 +1,6 @@
 package com.example.myportfolio.fragments.projects
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
     private val binding get() = _binding!!
     private val projectViewModel: ProjectsViewModel by viewModels()
     private lateinit var projectsAdapter: ProjectsAdapter
+    private var canRefresh = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,17 +40,31 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
         return binding.root
     }
 
+
+    /*Whenever RefreshLayout is triggered update ProjectLists.*/
     private fun refreshListener() {
         binding.projectsRefresh.setOnRefreshListener {
-            lifecycleScope.launch(IO) {
-                projectViewModel.updateProjectList()
+            if (canRefresh) {
+                lifecycleScope.launch(IO) {
+                    projectViewModel.updateProjectList()
+                }
+            } else {
+                binding.projectsRefresh.isRefreshing = false
             }
         }
     }
 
+
+    /*Checks whether updating is finished and change value of refresh availability.*/
     private fun refreshListenerProgress() {
         projectViewModel.currentState().observe(viewLifecycleOwner) {
-            binding.projectsRefresh.isRefreshing = it
+            canRefresh = it
+            if (!it) {
+                binding.projectsRefresh.isRefreshing = false
+                binding.projectsTitle.setTextColor(Color.BLACK)
+            }else{
+                binding.projectsTitle.setTextColor(Color.GREEN)
+            }
         }
     }
 
@@ -63,6 +79,8 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
         updateRecyclerViewContents()
     }
 
+
+    /*Places the values in the ROOM database inside the Recycler view*/
     private fun updateRecyclerViewContents() {
         projectViewModel.projectList().observe(viewLifecycleOwner, {
             projectsAdapter.setProjectList(it)
@@ -72,13 +90,7 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
 
         })
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        projectViewModel.removeListener()
-        _binding = null
-    }
-
+    /*Redirect to different Fragment*/
     override fun projectClickListener(index: Int) {
         val bundle = bundleOf(
             BUNDLE_PROJECT_DETAILS to (projectViewModel.projectList().value?.get(
@@ -90,4 +102,12 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
             bundle
         )
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        projectViewModel.removeListener()
+        _binding = null
+    }
+
+
 }
