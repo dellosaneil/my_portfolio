@@ -33,20 +33,22 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
     ): View {
         _binding = FragmentProjectsBinding.inflate(inflater, container, false)
         initializeRecyclerView()
-        updateProjectList()
+        refreshListenerProgress()
+        refreshListener()
         return binding.root
     }
 
-    private fun updateProjectList() {
-        projectViewModel.currentState().observe(viewLifecycleOwner) {
-            if (it) {
-                binding.projectsProgressBar.visibility = View.VISIBLE
-                lifecycleScope.launch(IO) {
-                    projectViewModel.updateProjectList()
-                }
-            }else{
-                binding.projectsProgressBar.visibility = View.INVISIBLE
+    private fun refreshListener() {
+        binding.projectsRefresh.setOnRefreshListener {
+            lifecycleScope.launch(IO) {
+                projectViewModel.updateProjectList()
             }
+        }
+    }
+
+    private fun refreshListenerProgress() {
+        projectViewModel.currentState().observe(viewLifecycleOwner) {
+            binding.projectsRefresh.isRefreshing = it
         }
     }
 
