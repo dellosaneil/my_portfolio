@@ -59,21 +59,21 @@ class ProjectsAdapter(private val listener : ProjectDetailListener) : RecyclerVi
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
         init{
-            binding.projectsImage.setOnClickListener(this)
+            binding.projectsListItemImage.setOnClickListener(this)
         }
 
         fun bind(data: ProjectData) {
-            binding.projectsName.text = data.projectTitle
-            binding.projectsDescription.text = data.projectDescription
+            binding.projectsListItemName.text = data.projectTitle
+            binding.projectsListItemDescription.text = data.projectDescription
 
             Glide.with(binding.root.context)
                 .load(data.projectImage)
-                .into(binding.projectsImage)
+                .into(binding.projectsListItemImage)
         }
 
         override fun onClick(v: View?) {
             when(v?.id){
-                R.id.projects_image -> listener.projectClickListener(adapterPosition)
+                R.id.projectsListItem_image -> listener.projectClickListener(adapterPosition)
             }
         }
     }

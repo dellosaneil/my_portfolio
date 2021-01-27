@@ -33,18 +33,21 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
     ): View {
         _binding = FragmentProjectsBinding.inflate(inflater, container, false)
         initializeRecyclerView()
+        updateProjectList()
+        return binding.root
+    }
+
+    private fun updateProjectList() {
         projectViewModel.currentState().observe(viewLifecycleOwner) {
             if (it) {
-                binding.projectProgressBar.visibility = View.VISIBLE
+                binding.projectsProgressBar.visibility = View.VISIBLE
                 lifecycleScope.launch(IO) {
                     projectViewModel.updateProjectList()
                 }
             }else{
-                binding.projectProgressBar.visibility = View.INVISIBLE
+                binding.projectsProgressBar.visibility = View.INVISIBLE
             }
         }
-
-        return binding.root
     }
 
     private fun initializeRecyclerView() {

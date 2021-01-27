@@ -35,6 +35,7 @@
 
     <string name="project_details_github">Github</string>
     <string name="project_details_open_application">Open App</string>
+    <string name="projects_title">Projects</string>
 
 
 </resources>

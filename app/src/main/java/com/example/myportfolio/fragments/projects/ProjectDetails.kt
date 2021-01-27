@@ -1,4 +1,4 @@
-package com.example.myportfolio.fragments.projects.projectDetails
+package com.example.myportfolio.fragments.projects
 
 import android.os.Bundle
 import android.view.LayoutInflater
