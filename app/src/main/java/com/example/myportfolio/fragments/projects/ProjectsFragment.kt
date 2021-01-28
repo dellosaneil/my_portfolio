@@ -2,6 +2,7 @@ package com.example.myportfolio.fragments.projects
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,19 +38,24 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.i(TAG, "onCreateView: ")
         _binding = FragmentProjectsBinding.inflate(inflater, container, false)
         initializeRecyclerView()
+        handleAutoUpdateSetting()
         refreshListenerProgress()
         refreshListener()
-        handleAutoUpdateSetting()
         return binding.root
     }
 
+    private val TAG = "ProjectsFragment"
+
     private fun handleAutoUpdateSetting() {
         settingsViewModel.isAutoUpdate.observe(viewLifecycleOwner) {
+            Log.i(TAG, "isAutoUpdate: $it")
             if (it) {
                 projectViewModel.currentState().observe(viewLifecycleOwner, { updateCheck ->
                     if (updateCheck) {
+                        Log.i(TAG, "currentState: $updateCheck")
                         lifecycleScope.launch(IO) {
                             projectViewModel.updateProjectList()
                         }
@@ -59,6 +65,17 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
             }
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        projectViewModel.attachCurrentStatusListener()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        projectViewModel.removeListener()
+    }
+
 
 
     /*Whenever RefreshLayout is triggered update ProjectLists.*/
@@ -126,7 +143,6 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
 
     override fun onDestroyView() {
         super.onDestroyView()
-        projectViewModel.removeListener()
         _binding = null
     }
 

@@ -62,13 +62,12 @@ class ProjectDetails : FragmentLifecycleLog() {
             binding.thirdScreenshot,
             binding.projectDetailsLanguageUsed
         )
-        val firstScreenShotReference =
-            storage.getReferenceFromUrl("$BUCKET_LINK${projectData.firstImageReference}")
-        val secondScreenshotReference =
-            storage.getReferenceFromUrl("$BUCKET_LINK${projectData.secondImageReference}")
-        val thirdScreenshotReference =
-            storage.getReferenceFromUrl("$BUCKET_LINK${projectData.thirdImageReference}")
-        val photoReference = arrayOf(firstScreenShotReference, secondScreenshotReference, thirdScreenshotReference)
+        val storageString = arrayOf(
+            projectData.firstImageReference,
+            projectData.secondImageReference,
+            projectData.thirdImageReference
+        )
+        val photoReference = retrieveStorageReference(storageString)
         val drawableLanguage = checkLanguage(projectData.projectLanguage.toLowerCase(Locale.ROOT))
         GlideApp.with(requireContext())
             .load(drawableLanguage)
@@ -76,8 +75,17 @@ class ProjectDetails : FragmentLifecycleLog() {
         loadFromFirebaseStorage(photoReference, viewArray)
     }
 
+    private fun retrieveStorageReference(storageString: Array<String>): List<StorageReference> {
+        val references = mutableListOf<StorageReference>()
+        for (storageReference in storageString) {
+            references.add(storage.getReferenceFromUrl("${BUCKET_LINK}$storageReference"))
+        }
+        return references
+    }
+
+
     private fun loadFromFirebaseStorage(
-        photoReference: Array<StorageReference>, viewArray: Array<ImageView>
+        photoReference: List<StorageReference>, viewArray: Array<ImageView>
     ) {
         repeat(3) {
             GlideApp.with(requireContext())

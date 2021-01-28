@@ -11,10 +11,10 @@ import com.example.myportfolio.utility.Constants.Companion.CHECK_UPDATE_COLLECTI
 import com.example.myportfolio.utility.Constants.Companion.PROJECT_COLLECTION
 import com.example.myportfolio.utility.Constants.Companion.UPDATE
 import com.example.myportfolio.utility.Constants.Companion.UPDATE_PROJECT
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 
 
@@ -29,21 +29,19 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
     fun currentState() = _currentState
 
     private val firestoreReference = Firebase.firestore
-    private lateinit var firebaseStatusListener: ListenerRegistration
-
-    init {
-        checkCurrentUpdateState()
-    }
+    private var firebaseStatusListener: ListenerRegistration? = null
 
     /*Checks current status of update field*/
-    private fun checkCurrentUpdateState() {
+    fun attachCurrentStatusListener() {
         firebaseStatusListener =
             firestoreReference.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_PROJECT)
                 .addSnapshotListener { snapshot, _ ->
                     run {
+                        Log.i(TAG, "attachCurrentStatusListener: LISTENING")
                         val currentState = snapshot?.get(UPDATE).let { it as Boolean }
                         _currentState.value = currentState
                     }
+
                 }
     }
 
@@ -56,7 +54,6 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
             run {
                 for (document in documents) {
                     val doc = document.toObject(ProjectData::class.java)
-                    Log.i(TAG, "updateProjectList: ${doc.projectTitle}")
                     if (!documentTitles.contains(doc.projectTitle)) {
                         documentList.add(doc)
                     }
@@ -70,13 +67,12 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
 
     private suspend fun processResourceReference(documentList: MutableList<ProjectData>) {
         for (data in documentList) {
-            Log.i(TAG, "processResourceReference: $data")
             insertProject(data)
         }
         changeProjectState()
     }
 
-/*when updating is finished, check the status of update*/
+    /*when updating is finished, check the status of update*/
     private fun changeProjectState() {
         val temp = mapOf(UPDATE to false)
         firestoreReference.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_PROJECT)
@@ -86,6 +82,7 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
     private suspend fun insertProject(project: ProjectData) = repository.insertProject(project)
 
     fun removeListener() {
-        firebaseStatusListener.remove()
+        firebaseStatusListener?.remove()
+        firebaseStatusListener = null
     }
 }

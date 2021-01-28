@@ -23,6 +23,7 @@
             tools:src = "@drawable/ic_news_tracker"
             android:layout_width="82dp"
             android:layout_height="139dp"
+            android:scaleType="centerCrop"
             android:background="@drawable/background_project_gradient"
             android:clickable="true"
             android:contentDescription="@string/photo_description"
