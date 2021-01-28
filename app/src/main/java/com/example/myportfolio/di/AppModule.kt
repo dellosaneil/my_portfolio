@@ -6,6 +6,7 @@ import com.example.myportfolio.utility.Constants.Companion.DATABASE_NAME
 import com.example.myportfolio.room.MyDatabase
 import com.example.myportfolio.room.dao.CertificateDao
 import com.example.myportfolio.room.dao.ProjectDao
+import com.example.myportfolio.repository.DataStoreRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,6 +32,10 @@ class AppModule {
     @Singleton
     @Provides
     fun provideProjectDao(database: MyDatabase) : ProjectDao = database.projectDao()
+
+    @Singleton
+    @Provides
+    fun provideDataStoreRepository(@ApplicationContext context : Context) : DataStoreRepository = DataStoreRepository(context)
 
 
 }

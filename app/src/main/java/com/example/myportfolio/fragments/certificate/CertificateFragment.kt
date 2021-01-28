@@ -2,13 +2,11 @@ package com.example.myportfolio.fragments.certificate
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
@@ -19,6 +17,7 @@ import com.example.myportfolio.databinding.FragmentCertificateBinding
 import com.example.myportfolio.utility.Constants
 import com.example.myportfolio.utility.FragmentLifecycleLog
 import com.example.myportfolio.utility.RecyclerViewDecorator
+import com.example.myportfolio.fragments.settings.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -33,7 +32,7 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
     private val certificateViewModel: CertificateViewModel by viewModels()
     private lateinit var certificateDialog: CertificateDialog
     private var canRefresh = false
-
+    private val settingsViewModel: SettingsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,20 +41,40 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
         _binding = FragmentCertificateBinding.inflate(inflater, container, false)
         initializeRecyclerView()
         observeUpdate()
+        handleAutoUpdateSetting()
+        refreshListener()
+        return binding.root
+    }
 
+    /*Automatically Sync to Network when setting is ON*/
+    private fun handleAutoUpdateSetting() {
+        settingsViewModel.isAutoUpdate.observe(viewLifecycleOwner) {
+            if (it) {
+                certificateViewModel.needUpdate().observe(viewLifecycleOwner, { updateCheck ->
+                    if (updateCheck) {
+                        lifecycleScope.launch(IO) {
+                            certificateViewModel.updateCertificationList()
+                        }
+                    }
+                })
+            }
+        }
+    }
+
+/*When swiped up it will sync it to the latest data.*/
+    private fun refreshListener() {
         binding.certificateRefresh.setOnRefreshListener {
-            lifecycleScope.launch(IO){
-                if(canRefresh) {
+            lifecycleScope.launch(IO) {
+                if (canRefresh) {
                     certificateViewModel.updateCertificationList()
-                }else{
+                } else {
                     binding.certificateRefresh.isRefreshing = false
                 }
             }
         }
-
-        return binding.root
     }
 
+/*Checks whether a new data has been placed. */
     private fun observeUpdate() {
         certificateViewModel.checkUpdate()
         certificateViewModel.needUpdate().observe(viewLifecycleOwner, {
@@ -63,7 +82,7 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
             if (!it) {
                 binding.certificateRefresh.isRefreshing = false
                 binding.certificateTitle.setTextColor(Color.BLACK)
-            }else{
+            } else {
                 binding.certificateTitle.setTextColor(Color.GREEN)
             }
         })

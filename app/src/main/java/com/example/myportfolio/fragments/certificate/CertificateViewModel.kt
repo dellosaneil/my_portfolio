@@ -44,6 +44,7 @@ class CertificateViewModel @ViewModelInject constructor(private val repository: 
         updateRoomDatabase(documentCertificateData)
     }
 
+
     private suspend fun updateRoomDatabase(allDocuments: MutableList<CertificateData>) {
         val temp = certificateList().value
         for (document in allDocuments) {
@@ -53,24 +54,28 @@ class CertificateViewModel @ViewModelInject constructor(private val repository: 
                 }
             }
             val changeState = mapOf(UPDATE to false)
-            firestoreReference.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_CERTIFICATION).set(changeState)
+            firestoreReference.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_CERTIFICATION)
+                .set(changeState)
         }
     }
 
     /*Checks whether the application is up to date.*/
     fun checkUpdate() {
-        updateCertificateUpdate = firestoreReference.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_CERTIFICATION)
-            .addSnapshotListener { snapShot, exception ->
-                run {
-                    if (exception != null) {
-                        _needUpdate.value = false
-                    } else {
-                        val currentState = snapShot?.get(UPDATE).let{it as Boolean}
-                        _needUpdate.value = currentState
+        updateCertificateUpdate =
+            firestoreReference.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_CERTIFICATION)
+                .addSnapshotListener { snapShot, exception ->
+                    run {
+                        if (exception != null) {
+                            _needUpdate.value = false
+                        } else {
+                            val currentState = snapShot?.get(UPDATE).let { it as Boolean }
+                            _needUpdate.value = currentState
+                        }
                     }
                 }
-            }
     }
+
+
 
     fun removeListeners() {
         onCleared()

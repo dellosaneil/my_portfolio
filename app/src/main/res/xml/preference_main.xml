@@ -3,12 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreferenceCompat
-
-        app:key= "dark_theme"
-        app:title="Dark Mode"
-        app:summary="@string/settings_dark_mode_summary"/>
-
-    <SwitchPreferenceCompat
         app:key= "auto_update"
         app:title="Sync to network"
         android:summary="@string/settings_sync_network"/>
