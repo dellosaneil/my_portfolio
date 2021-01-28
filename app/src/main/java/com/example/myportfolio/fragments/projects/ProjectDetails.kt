@@ -62,30 +62,28 @@ class ProjectDetails : FragmentLifecycleLog() {
             binding.thirdScreenshot,
             binding.projectDetailsLanguageUsed
         )
+        val firstScreenShotReference =
+            storage.getReferenceFromUrl("$BUCKET_LINK${projectData.firstImageReference}")
         val secondScreenshotReference =
             storage.getReferenceFromUrl("$BUCKET_LINK${projectData.secondImageReference}")
         val thirdScreenshotReference =
             storage.getReferenceFromUrl("$BUCKET_LINK${projectData.thirdImageReference}")
-        val photoReference = arrayOf(secondScreenshotReference, thirdScreenshotReference)
+        val photoReference = arrayOf(firstScreenShotReference, secondScreenshotReference, thirdScreenshotReference)
         val drawableLanguage = checkLanguage(projectData.projectLanguage.toLowerCase(Locale.ROOT))
         GlideApp.with(requireContext())
             .load(drawableLanguage)
             .into(viewArray[3])
-        GlideApp.with(requireContext())
-            .load(projectData.projectImage)
-            .into(viewArray[0])
         loadFromFirebaseStorage(photoReference, viewArray)
     }
 
     private fun loadFromFirebaseStorage(
         photoReference: Array<StorageReference>, viewArray: Array<ImageView>
     ) {
-        repeat(2) {
-            val index = it + 1
+        repeat(3) {
             GlideApp.with(requireContext())
                 .load(photoReference[it])
                 .placeholder(R.drawable.ic_news_tracker)
-                .into(viewArray[index])
+                .into(viewArray[it])
         }
     }
 

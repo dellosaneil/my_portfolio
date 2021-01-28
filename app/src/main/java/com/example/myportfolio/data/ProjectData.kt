@@ -1,6 +1,5 @@
 package com.example.myportfolio.data
 
-import android.graphics.Bitmap
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -14,10 +13,11 @@ data class ProjectData(
     val projectLanguage: String = "",
     val projectTitle: String = "",
     val projectDescription: String = "",
-    val projectImage: Bitmap? = null,
+    val firstImageReference : String = "",
     val secondImageReference: String = "",
     val thirdImageReference: String = "",
-    val gitHubRepository: String = "",
+    val gitHubRepository: String = ""
+
 ) : Parcelable {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)

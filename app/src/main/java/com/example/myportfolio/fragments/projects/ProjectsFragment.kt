@@ -12,12 +12,15 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myportfolio.R
 import com.example.myportfolio.databinding.FragmentProjectsBinding
+import com.example.myportfolio.fragments.settings.SettingsViewModel
 import com.example.myportfolio.utility.Constants.Companion.BUNDLE_PROJECT_DETAILS
 import com.example.myportfolio.utility.FragmentLifecycleLog
 import com.example.myportfolio.utility.RecyclerViewDecorator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
@@ -27,6 +30,7 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
     private val binding get() = _binding!!
     private val projectViewModel: ProjectsViewModel by viewModels()
     private lateinit var projectsAdapter: ProjectsAdapter
+    private val settingsViewModel: SettingsViewModel by viewModels()
     private var canRefresh = true
 
     override fun onCreateView(
@@ -37,7 +41,23 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
         initializeRecyclerView()
         refreshListenerProgress()
         refreshListener()
+        handleAutoUpdateSetting()
         return binding.root
+    }
+
+    private fun handleAutoUpdateSetting() {
+        settingsViewModel.isAutoUpdate.observe(viewLifecycleOwner) {
+            if (it) {
+                projectViewModel.currentState().observe(viewLifecycleOwner, { updateCheck ->
+                    if (updateCheck) {
+                        lifecycleScope.launch(IO) {
+                            projectViewModel.updateProjectList()
+                        }
+                        binding.projectsRefresh.isRefreshing = true
+                    }
+                })
+            }
+        }
     }
 
 
@@ -62,7 +82,7 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
             if (!it) {
                 binding.projectsRefresh.isRefreshing = false
                 binding.projectsTitle.setTextColor(Color.BLACK)
-            }else{
+            } else {
                 binding.projectsTitle.setTextColor(Color.GREEN)
             }
         }
@@ -90,6 +110,7 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
 
         })
     }
+
     /*Redirect to different Fragment*/
     override fun projectClickListener(index: Int) {
         val bundle = bundleOf(

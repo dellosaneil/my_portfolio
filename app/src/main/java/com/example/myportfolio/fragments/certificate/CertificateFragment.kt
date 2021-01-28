@@ -55,13 +55,14 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
                         lifecycleScope.launch(IO) {
                             certificateViewModel.updateCertificationList()
                         }
+                        binding.certificateRefresh.isRefreshing = true
                     }
                 })
             }
         }
     }
 
-/*When swiped up it will sync it to the latest data.*/
+    /*When swiped up it will sync it to the latest data.*/
     private fun refreshListener() {
         binding.certificateRefresh.setOnRefreshListener {
             lifecycleScope.launch(IO) {
@@ -74,7 +75,7 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
         }
     }
 
-/*Checks whether a new data has been placed. */
+    /*Checks whether a new data has been placed. */
     private fun observeUpdate() {
         certificateViewModel.checkUpdate()
         certificateViewModel.needUpdate().observe(viewLifecycleOwner, {

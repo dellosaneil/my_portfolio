@@ -1,14 +1,11 @@
 package com.example.myportfolio.fragments.projects
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myportfolio.data.ProjectData
-import com.example.myportfolio.firebase_data.ProjectFirebase
 import com.example.myportfolio.repository.ProjectsRepository
 import com.example.myportfolio.utility.Constants.Companion.CHECK_UPDATE_COLLECTION
 import com.example.myportfolio.utility.Constants.Companion.PROJECT_COLLECTION
@@ -24,7 +21,6 @@ import kotlinx.coroutines.tasks.await
 class ProjectsViewModel @ViewModelInject constructor(private val repository: ProjectsRepository) :
     ViewModel() {
 
-    private val MAX_BYTES = 10L * 1024 * 1024;
 
     private var _projectList: LiveData<List<ProjectData>> = repository.retrieveProjects()
     fun projectList() = _projectList
@@ -33,7 +29,6 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
     fun currentState() = _currentState
 
     private val firestoreReference = Firebase.firestore
-    private val storage = Firebase.storage.reference
     private lateinit var firebaseStatusListener: ListenerRegistration
 
     init {
@@ -56,12 +51,13 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
     suspend fun updateProjectList() {
         val projectReference = firestoreReference.collection(PROJECT_COLLECTION)
         val documentTitles = repository.retrieveProjectTitles()
-        val documentList = mutableListOf<ProjectFirebase>()
+        val documentList = mutableListOf<ProjectData>()
         projectReference.get().addOnSuccessListener { documents ->
             run {
                 for (document in documents) {
-                    val doc = document.toObject(ProjectFirebase::class.java)
-                    if (!documentTitles.contains(doc.name)) {
+                    val doc = document.toObject(ProjectData::class.java)
+                    Log.i(TAG, "updateProjectList: ${doc.projectTitle}")
+                    if (!documentTitles.contains(doc.projectTitle)) {
                         documentList.add(doc)
                     }
                 }
@@ -70,22 +66,12 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
         processResourceReference(documentList)
     }
 
-    private suspend fun processResourceReference(documentList: MutableList<ProjectFirebase>) {
+    private val TAG = "ProjectsViewModel"
+
+    private suspend fun processResourceReference(documentList: MutableList<ProjectData>) {
         for (data in documentList) {
-            var bytes: ByteArray? = null
-            storage.child(data.firstImage).getBytes(MAX_BYTES)
-                .addOnSuccessListener { image -> bytes = image }.await()
-            val bitmap = convertByteArrayToBitmap(bytes)
-            val tempProjectData = ProjectData(
-                data.language,
-                data.name,
-                data.description,
-                bitmap,
-                data.secondImage,
-                data.thirdImage,
-                data.github
-            )
-            insertProject(tempProjectData)
+            Log.i(TAG, "processResourceReference: $data")
+            insertProject(data)
         }
         changeProjectState()
     }
@@ -95,10 +81,6 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
         val temp = mapOf(UPDATE to false)
         firestoreReference.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_PROJECT)
             .set(temp)
-    }
-
-    private fun convertByteArrayToBitmap(byte: ByteArray?): Bitmap? {
-        return byte?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
     }
 
     private suspend fun insertProject(project: ProjectData) = repository.insertProject(project)
