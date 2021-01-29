@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
@@ -33,6 +34,8 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
     private lateinit var certificateDialog: CertificateDialog
     private var canRefresh = false
     private val settingsViewModel: SettingsViewModel by viewModels()
+    private lateinit var autoUpdateObserver: Observer<Boolean>
+    private lateinit var needUpdateObserver: Observer<Boolean>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,27 +43,55 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
     ): View {
         _binding = FragmentCertificateBinding.inflate(inflater, container, false)
         initializeRecyclerView()
+        initializeObservers()
         observeUpdate()
-        handleAutoUpdateSetting()
         refreshListener()
         return binding.root
     }
 
-    /*Automatically Sync to Network when setting is ON*/
-    private fun handleAutoUpdateSetting() {
-        settingsViewModel.isAutoUpdate.observe(viewLifecycleOwner) {
+    private fun initializeObservers() {
+        initializeAutoUpdateObserver()
+        initializeNeedUpdateObserver()
+    }
+
+    private fun initializeNeedUpdateObserver() {
+        needUpdateObserver = Observer {
             if (it) {
-                certificateViewModel.needUpdate().observe(viewLifecycleOwner, { updateCheck ->
-                    if (updateCheck) {
-                        lifecycleScope.launch(IO) {
-                            certificateViewModel.updateCertificationList()
-                        }
-                        binding.certificateRefresh.isRefreshing = true
-                    }
-                })
+                lifecycleScope.launch(IO) {
+                    certificateViewModel.updateCertificationList()
+                }
+                binding.certificateRefresh.isRefreshing = true
             }
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        certificateViewModel.attachCurrentStateListener()
+        handleAutoUpdateSetting()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        certificateViewModel.removeListeners()
+        certificateViewModel.needUpdate().removeObserver(needUpdateObserver)
+        settingsViewModel.isAutoUpdate.removeObserver(autoUpdateObserver)
+    }
+
+
+    private fun initializeAutoUpdateObserver() {
+        autoUpdateObserver = Observer {
+            if (it) {
+                certificateViewModel.needUpdate().observe(viewLifecycleOwner,needUpdateObserver)
+            }
+        }
+    }
+
+    /*Automatically Sync to Network when setting is ON*/
+    private fun handleAutoUpdateSetting() {
+        settingsViewModel.isAutoUpdate.observe(viewLifecycleOwner, autoUpdateObserver)
+    }
+
 
     /*When swiped up it will sync it to the latest data.*/
     private fun refreshListener() {
@@ -77,7 +108,6 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
 
     /*Checks whether a new data has been placed. */
     private fun observeUpdate() {
-        certificateViewModel.checkUpdate()
         certificateViewModel.needUpdate().observe(viewLifecycleOwner, {
             canRefresh = it
             if (!it) {

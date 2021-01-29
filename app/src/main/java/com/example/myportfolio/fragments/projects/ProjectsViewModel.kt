@@ -38,7 +38,6 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
             firestoreReference.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_PROJECT)
                 .addSnapshotListener { snapshot, _ ->
                     run {
-                        Log.i(TAG, "attachCurrentStatusListener: ")
                         val currentState = snapshot?.get(UPDATE).let { it as Boolean }
                         _currentState.value = currentState
                     }

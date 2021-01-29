@@ -40,16 +40,15 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
     ): View {
         _binding = FragmentProjectsBinding.inflate(inflater, container, false)
         initializeRecyclerView()
-        handleAutoUpdateSetting()
+        initializeObservers()
         refreshListenerProgress()
         refreshListener()
         return binding.root
     }
 
-    private fun handleAutoUpdateSetting() {
+    private fun initializeObservers() {
         initializeAutoUpdateObserver()
         initializeCurrentStateListener()
-        settingsViewModel.isAutoUpdate.observe(viewLifecycleOwner, autoUpdateObserver)
     }
 
     private fun initializeCurrentStateListener() {
@@ -77,6 +76,7 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
     override fun onStart() {
         super.onStart()
         projectViewModel.attachCurrentStatusListener()
+        settingsViewModel.isAutoUpdate.observe(viewLifecycleOwner, autoUpdateObserver)
     }
 
     override fun onStop() {

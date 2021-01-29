@@ -60,7 +60,7 @@ class CertificateViewModel @ViewModelInject constructor(private val repository: 
     }
 
     /*Checks whether the application is up to date.*/
-    fun checkUpdate() {
+    fun attachCurrentStateListener() {
         updateCertificateUpdate =
             firestoreReference.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_CERTIFICATION)
                 .addSnapshotListener { snapShot, exception ->
@@ -74,8 +74,6 @@ class CertificateViewModel @ViewModelInject constructor(private val repository: 
                     }
                 }
     }
-
-
 
     fun removeListeners() {
         onCleared()
