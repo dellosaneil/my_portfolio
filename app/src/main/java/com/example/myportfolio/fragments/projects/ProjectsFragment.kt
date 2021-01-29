@@ -2,12 +2,12 @@ package com.example.myportfolio.fragments.projects
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,9 +19,7 @@ import com.example.myportfolio.utility.FragmentLifecycleLog
 import com.example.myportfolio.utility.RecyclerViewDecorator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
@@ -33,12 +31,13 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
     private lateinit var projectsAdapter: ProjectsAdapter
     private val settingsViewModel: SettingsViewModel by viewModels()
     private var canRefresh = true
+    private lateinit var autoUpdateObserver: Observer<Boolean>
+    private lateinit var currentStateObserver: Observer<Boolean>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.i(TAG, "onCreateView: ")
         _binding = FragmentProjectsBinding.inflate(inflater, container, false)
         initializeRecyclerView()
         handleAutoUpdateSetting()
@@ -47,24 +46,33 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
         return binding.root
     }
 
-    private val TAG = "ProjectsFragment"
-
     private fun handleAutoUpdateSetting() {
-        settingsViewModel.isAutoUpdate.observe(viewLifecycleOwner) {
-            Log.i(TAG, "isAutoUpdate: $it")
+        initializeAutoUpdateObserver()
+        initializeCurrentStateListener()
+        settingsViewModel.isAutoUpdate.observe(viewLifecycleOwner, autoUpdateObserver)
+    }
+
+    private fun initializeCurrentStateListener() {
+        currentStateObserver = Observer<Boolean> {
             if (it) {
-                projectViewModel.currentState().observe(viewLifecycleOwner, { updateCheck ->
-                    if (updateCheck) {
-                        Log.i(TAG, "currentState: $updateCheck")
-                        lifecycleScope.launch(IO) {
-                            projectViewModel.updateProjectList()
-                        }
-                        binding.projectsRefresh.isRefreshing = true
-                    }
-                })
+                lifecycleScope.launch(IO) {
+                    projectViewModel.updateProjectList()
+                }
+                binding.projectsRefresh.isRefreshing = true
             }
         }
     }
+
+    private fun initializeAutoUpdateObserver() {
+        autoUpdateObserver = Observer<Boolean> {
+            if (it) {
+                projectViewModel.currentState().observe(viewLifecycleOwner, currentStateObserver)
+            } else {
+                projectViewModel.currentState().removeObserver(currentStateObserver)
+            }
+        }
+    }
+
 
     override fun onStart() {
         super.onStart()
@@ -73,10 +81,10 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
 
     override fun onStop() {
         super.onStop()
+        settingsViewModel.isAutoUpdate.removeObserver(autoUpdateObserver)
+        projectViewModel.currentState().removeObserver(currentStateObserver)
         projectViewModel.removeListener()
     }
-
-
 
     /*Whenever RefreshLayout is triggered update ProjectLists.*/
     private fun refreshListener() {

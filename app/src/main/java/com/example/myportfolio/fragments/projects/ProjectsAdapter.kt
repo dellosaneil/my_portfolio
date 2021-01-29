@@ -72,7 +72,9 @@ class ProjectsAdapter(private val listener: ProjectDetailListener) :
             val firstScreenShotReference =
                 Firebase.storage.getReferenceFromUrl("${Constants.BUCKET_LINK}${data.firstImageReference}")
             GlideApp.with(binding.root.context)
+                .asBitmap()
                 .load(firstScreenShotReference)
+                .placeholder(R.drawable.ic_android_place_holder)
                 .into(binding.projectsListItemImage)
         }
 

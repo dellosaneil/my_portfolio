@@ -31,21 +31,21 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
     private val firestoreReference = Firebase.firestore
     private var firebaseStatusListener: ListenerRegistration? = null
 
+    private val TAG = "ProjectsViewModel"
     /*Checks current status of update field*/
     fun attachCurrentStatusListener() {
         firebaseStatusListener =
             firestoreReference.collection(CHECK_UPDATE_COLLECTION).document(UPDATE_PROJECT)
                 .addSnapshotListener { snapshot, _ ->
                     run {
-                        Log.i(TAG, "attachCurrentStatusListener: LISTENING")
+                        Log.i(TAG, "attachCurrentStatusListener: ")
                         val currentState = snapshot?.get(UPDATE).let { it as Boolean }
                         _currentState.value = currentState
                     }
 
                 }
     }
-
-
+    
     suspend fun updateProjectList() {
         val projectReference = firestoreReference.collection(PROJECT_COLLECTION)
         val documentTitles = repository.retrieveProjectTitles()
@@ -62,8 +62,6 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
         }.await()
         processResourceReference(documentList)
     }
-
-    private val TAG = "ProjectsViewModel"
 
     private suspend fun processResourceReference(documentList: MutableList<ProjectData>) {
         for (data in documentList) {
@@ -82,7 +80,7 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
     private suspend fun insertProject(project: ProjectData) = repository.insertProject(project)
 
     fun removeListener() {
-        firebaseStatusListener?.remove()
+        firebaseStatusListener!!.remove()
         firebaseStatusListener = null
     }
 }
