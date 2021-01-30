@@ -13,7 +13,7 @@ interface CertificateDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCertificate(certificate : CertificateData)
 
-    @Query("SELECT * FROM certificate_table")
+    @Query("SELECT * FROM certificate_table ORDER BY timeUploaded DESC")
     fun retrieveCertificateList() : LiveData<List<CertificateData>>
 
     @Query("SELECT COUNT(*) FROM certificate_table WHERE credentialId = :id")

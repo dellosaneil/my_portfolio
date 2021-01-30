@@ -1,6 +1,5 @@
 package com.example.myportfolio.fragments.projects
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,7 +12,6 @@ import com.example.myportfolio.utility.Constants.Companion.MAIN_DOCUMENT
 import com.example.myportfolio.utility.Constants.Companion.PROJECT_COLLECTION
 import com.example.myportfolio.utility.Constants.Companion.UPDATE
 import com.example.myportfolio.utility.Constants.Companion.UPDATE_PROJECT
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

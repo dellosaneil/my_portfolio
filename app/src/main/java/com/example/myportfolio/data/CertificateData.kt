@@ -12,7 +12,8 @@ data class CertificateData(
     val certificateTitle : String = "",
     val companyName: String = "",
     val credentialId: String = "",
-    val credentialUrl: String = ""
+    val credentialUrl: String = "",
+    val timeUploaded: Long = 0L
 ) : Parcelable {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true) var id : Int = 0

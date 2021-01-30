@@ -13,7 +13,7 @@ interface ProjectDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProject(project : ProjectData)
 
-    @Query("SELECT * FROM projects_table")
+    @Query("SELECT * FROM projects_table ORDER BY timeUploaded DESC")
     fun retrieveProjects() : LiveData<List<ProjectData>>
 
     @Query("DELETE FROM projects_table")

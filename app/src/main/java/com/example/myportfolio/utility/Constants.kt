@@ -2,7 +2,7 @@ package com.example.myportfolio.utility
 
 class Constants {
     companion object {
-        const val DATABASE_NAME = "portfolio_db"
+        const val DATABASE_NAME = "my_portfolio"
 
         const val AUTO_UPDATE = "auto_update"
         const val CLEAR_DATABASE_KEY = "clear_data"

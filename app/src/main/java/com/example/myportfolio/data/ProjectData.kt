@@ -16,7 +16,8 @@ data class ProjectData(
     val firstImageReference : String = "",
     val secondImageReference: String = "",
     val thirdImageReference: String = "",
-    val gitHubRepository: String = ""
+    val gitHubRepository: String = "",
+    val timeUploaded: Long = 0L
 
 ) : Parcelable {
     @IgnoredOnParcel
