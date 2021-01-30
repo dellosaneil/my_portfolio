@@ -44,7 +44,7 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
         _binding = FragmentCertificateBinding.inflate(inflater, container, false)
         initializeRecyclerView()
         initializeObservers()
-        observeUpdate()
+        checkRefreshFinish()
         refreshListener()
         return binding.root
     }
@@ -82,7 +82,7 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
     private fun initializeAutoUpdateObserver() {
         autoUpdateObserver = Observer {
             if (it) {
-                certificateViewModel.needUpdate().observe(viewLifecycleOwner,needUpdateObserver)
+                certificateViewModel.needUpdate().observe(viewLifecycleOwner, needUpdateObserver)
             }
         }
     }
@@ -107,7 +107,7 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
     }
 
     /*Checks whether a new data has been placed. */
-    private fun observeUpdate() {
+    private fun checkRefreshFinish() {
         certificateViewModel.needUpdate().observe(viewLifecycleOwner, {
             canRefresh = it
             if (!it) {

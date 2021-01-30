@@ -4,7 +4,6 @@ class Constants {
     companion object {
         const val DATABASE_NAME = "portfolio_db"
 
-        const val DARK_THEME = "dark_theme"
         const val AUTO_UPDATE = "auto_update"
         const val CLEAR_DATABASE_KEY = "clear_data"
 
@@ -24,6 +23,9 @@ class Constants {
         const val BUCKET_LINK = "gs://fir-demo-138c6.appspot.com/"
 
         const val SETTINGS_PREFERENCE = "settings"
+
+        const val MAIN_COLLECTION = "My Portfolio"
+        const val MAIN_DOCUMENT = "portfolio files"
 
 
 

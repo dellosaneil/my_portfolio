@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import com.example.myportfolio.data.ProjectData
 import com.example.myportfolio.repository.ProjectsRepository
 import com.example.myportfolio.utility.Constants.Companion.CHECK_UPDATE_COLLECTION
+import com.example.myportfolio.utility.Constants.Companion.MAIN_COLLECTION
+import com.example.myportfolio.utility.Constants.Companion.MAIN_DOCUMENT
 import com.example.myportfolio.utility.Constants.Companion.PROJECT_COLLECTION
 import com.example.myportfolio.utility.Constants.Companion.UPDATE
 import com.example.myportfolio.utility.Constants.Companion.UPDATE_PROJECT
@@ -28,7 +30,8 @@ class ProjectsViewModel @ViewModelInject constructor(private val repository: Pro
 
     fun currentState() = _currentState
 
-    private val firestoreReference = Firebase.firestore
+    private val firestoreReference = Firebase.firestore.collection(MAIN_COLLECTION).document(
+        MAIN_DOCUMENT)
     private var firebaseStatusListener: ListenerRegistration? = null
 
     private val TAG = "ProjectsViewModel"

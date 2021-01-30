@@ -9,6 +9,8 @@ import com.example.myportfolio.repository.CertificateRepository
 import com.example.myportfolio.utility.Constants.Companion.CERTIFICATE_COLLECTION
 import com.example.myportfolio.utility.Constants.Companion.UPDATE
 import com.example.myportfolio.utility.Constants.Companion.CHECK_UPDATE_COLLECTION
+import com.example.myportfolio.utility.Constants.Companion.MAIN_COLLECTION
+import com.example.myportfolio.utility.Constants.Companion.MAIN_DOCUMENT
 import com.example.myportfolio.utility.Constants.Companion.UPDATE_CERTIFICATION
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
@@ -19,7 +21,9 @@ import kotlinx.coroutines.tasks.await
 class CertificateViewModel @ViewModelInject constructor(private val repository: CertificateRepository) :
     ViewModel() {
 
-    private val firestoreReference = Firebase.firestore
+    private val firestoreReference = Firebase.firestore.collection(MAIN_COLLECTION).document(
+        MAIN_DOCUMENT
+    )
 
     private var _needUpdate = MutableLiveData(false)
     private var mCertificateList: LiveData<List<CertificateData>> =
