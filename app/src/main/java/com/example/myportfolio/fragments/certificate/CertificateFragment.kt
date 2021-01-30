@@ -29,11 +29,16 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
 
     private var _binding: FragmentCertificateBinding? = null
     private val binding get() = _binding!!
-    private lateinit var certificateAdapter: CertificateAdapter
+
+
     private val certificateViewModel: CertificateViewModel by viewModels()
-    private lateinit var certificateDialog: CertificateDialog
-    private var canRefresh = false
     private val settingsViewModel: SettingsViewModel by viewModels()
+
+    private var canRefresh = false
+
+    private lateinit var certificateDialog: CertificateDialog
+    private lateinit var certificateAdapter: CertificateAdapter
+
     private lateinit var autoUpdateObserver: Observer<Boolean>
     private lateinit var needUpdateObserver: Observer<Boolean>
 

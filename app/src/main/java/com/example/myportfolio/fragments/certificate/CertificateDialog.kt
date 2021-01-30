@@ -7,6 +7,7 @@ import com.example.myportfolio.R
 import com.example.myportfolio.data.CertificateData
 import com.example.myportfolio.databinding.DialogCertificateDetailBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.util.*
 
 class CertificateDialog(
     private val activity: Activity,
@@ -24,9 +25,9 @@ class CertificateDialog(
     }
 
     private fun imageResource(): Int {
-        return when (details.companyName) {
-            "Coursera" -> R.drawable.ic_coursera_48
-            "Udemy" -> R.drawable.ic_udemy_48
+        return when (details.companyName.toLowerCase(Locale.ROOT)) {
+            "coursera" -> R.drawable.ic_coursera_48
+            "udemy" -> R.drawable.ic_udemy_48
             else -> R.drawable.cat
         }
     }

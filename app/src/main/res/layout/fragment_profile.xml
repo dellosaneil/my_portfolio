@@ -20,26 +20,26 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:collapsedTitleGravity="center_horizontal"
-            app:expandedTitleGravity="center|bottom"
-            app:title="@string/my_name"
+            app:collapsedTitleTextAppearance="@style/Toolbar.AppearanceCollapse"
             app:contentScrim="@drawable/background_profile_gradient"
+            app:expandedTitleGravity="center|bottom"
             app:expandedTitleMargin="10dp"
             app:expandedTitleMarginTop="10dp"
             app:expandedTitleTextAppearance="@style/Toolbar.AppearanceExpanded"
-            app:collapsedTitleTextAppearance="@style/Toolbar.AppearanceCollapse"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+            app:title="@string/my_name">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_collapseMode="parallax"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:layout_collapseMode="parallax">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/dialogCertificate_face"
-                    android:layout_gravity="center"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
+                    android:layout_gravity="center"
                     android:layout_marginTop="12dp"
                     android:scaleType="centerCrop"
                     app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView" />
@@ -48,26 +48,16 @@
             <com.google.android.material.appbar.MaterialToolbar
                 android:layout_width="match_parent"
                 android:layout_height="?android:actionBarSize"
-                app:layout_collapseMode="pin"/>
+                app:layout_collapseMode="pin" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/profile_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_anchor="@+id/nestedScrollView"
-        app:layout_anchorGravity="center"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/profile_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            tools:listitem="@layout/list_item_profile" />
-    </androidx.core.widget.NestedScrollView>
-
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/list_item_profile" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

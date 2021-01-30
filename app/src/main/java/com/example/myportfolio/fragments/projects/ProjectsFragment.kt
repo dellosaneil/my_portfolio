@@ -130,7 +130,7 @@ class ProjectsFragment : FragmentLifecycleLog(), ProjectsAdapter.ProjectDetailLi
         projectViewModel.projectList().observe(viewLifecycleOwner, {
             projectsAdapter.setProjectList(it)
             if (it.isNotEmpty()) {
-                binding.projectsRecyclerView.smoothScrollToPosition(it.size - 1)
+                binding.projectsRecyclerView.smoothScrollToPosition(0)
             }
 
         })
