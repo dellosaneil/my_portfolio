@@ -1,6 +1,5 @@
 package com.example.myportfolio.fragments.projects
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,10 +14,12 @@ import com.example.myportfolio.utility.Constants.Companion.UPDATE_PROJECT
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-
-class ProjectsViewModel @ViewModelInject constructor(private val repository: ProjectsRepository) :
+@HiltViewModel
+class ProjectsViewModel @Inject constructor(private val repository: ProjectsRepository) :
     ViewModel() {
 
 

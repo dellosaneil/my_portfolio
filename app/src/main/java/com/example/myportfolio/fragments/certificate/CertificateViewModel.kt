@@ -1,24 +1,26 @@
 package com.example.myportfolio.fragments.certificate
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myportfolio.data.CertificateData
 import com.example.myportfolio.repository.CertificateRepository
 import com.example.myportfolio.utility.Constants.Companion.CERTIFICATE_COLLECTION
-import com.example.myportfolio.utility.Constants.Companion.UPDATE
 import com.example.myportfolio.utility.Constants.Companion.CHECK_UPDATE_COLLECTION
 import com.example.myportfolio.utility.Constants.Companion.MAIN_COLLECTION
 import com.example.myportfolio.utility.Constants.Companion.MAIN_DOCUMENT
+import com.example.myportfolio.utility.Constants.Companion.UPDATE
 import com.example.myportfolio.utility.Constants.Companion.UPDATE_CERTIFICATION
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class CertificateViewModel @ViewModelInject constructor(private val repository: CertificateRepository) :
+@HiltViewModel
+class CertificateViewModel @Inject constructor(private val repository: CertificateRepository) :
     ViewModel() {
 
     private val firestoreReference = Firebase.firestore.collection(MAIN_COLLECTION).document(
