@@ -8,9 +8,7 @@ import android.content.Intent
 import android.graphics.Point
 import android.graphics.Rect
 import android.graphics.RectF
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +16,9 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import com.example.myportfolio.R
 import com.example.myportfolio.data.ProjectData
@@ -41,6 +41,10 @@ class ProjectDetails : FragmentLifecycleLog(), View.OnClickListener {
     private val storage = Firebase.storage
     private lateinit var projectTitle: String
 
+    private lateinit var startBounds : RectF
+    private var startScale : Float = 0f
+    private var imageEnlarged : Int = -1
+
     private lateinit var photoStorageReference : List<StorageReference>
 
     private var currentAnimator: Animator? = null
@@ -52,13 +56,94 @@ class ProjectDetails : FragmentLifecycleLog(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProjectDetailsBinding.inflate(inflater, container, false)
+        setOnClickListeners()
+        shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
+        return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (binding.projectDetailsEnlargedImage.isVisible) {
+                    animateClose(imageEnlarged)
+                } else {
+                    isEnabled = false
+                    activity?.onBackPressed()
+                }
+            }
+        })
+    }
+
+    private fun indexToImageButton(index : Int) : ImageButton? {
+        return when(index){
+            0 -> binding.firstScreenshot
+            1 -> binding.secondScreenshot
+            2 -> binding.thirdScreenshot
+            else -> null
+        }
+    }
+
+
+    private fun animateClose(index: Int){
+        currentAnimator = AnimatorSet().apply {
+            play(
+                ObjectAnimator.ofFloat(
+                    binding.projectDetailsEnlargedImage,
+                    View.X,
+                    startBounds.left
+                )
+            ).apply {
+                with(
+                    ObjectAnimator.ofFloat(
+                        binding.projectDetailsEnlargedImage,
+                        View.Y,
+                        startBounds.top
+                    )
+                )
+                with(
+                    ObjectAnimator.ofFloat(
+                        binding.projectDetailsEnlargedImage,
+                        View.SCALE_X,
+                        startScale
+                    )
+                )
+                with(
+                    ObjectAnimator.ofFloat(
+                        binding.projectDetailsEnlargedImage,
+                        View.SCALE_Y,
+                        startScale
+                    )
+                )
+            }
+            duration = shortAnimationDuration.toLong()
+            interpolator = DecelerateInterpolator()
+            addListener(object : AnimatorListenerAdapter() {
+
+                override fun onAnimationEnd(animation: Animator) {
+                    indexToImageButton(index)?.alpha = 1f
+                    binding.projectDetailsEnlargedImage.visibility = View.GONE
+                    currentAnimator = null
+                }
+
+                override fun onAnimationCancel(animation: Animator) {
+                    indexToImageButton(index)?.alpha = 1f
+                    binding.projectDetailsEnlargedImage.visibility = View.GONE
+                    currentAnimator = null
+                }
+            })
+            start()
+        }
+    }
+
+
+    private fun setOnClickListeners(){
         binding.projectDetailsOpenApp.setOnClickListener(this)
         binding.firstScreenshot.setOnClickListener(this)
         binding.secondScreenshot.setOnClickListener(this)
         binding.thirdScreenshot.setOnClickListener(this)
-        shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
-        return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -170,27 +255,27 @@ class ProjectDetails : FragmentLifecycleLog(), View.OnClickListener {
         }
     }
 
-    private fun zoomImage(firstScreenshot: ImageButton, drawable : Int) {
+    private fun zoomImage(screenshotImage: ImageButton, screenshotIndexNumber : Int) {
         currentAnimator?.cancel()
+        imageEnlarged = screenshotIndexNumber
         GlideApp.with(requireContext())
             .asBitmap()
-            .load(photoStorageReference[drawable])
+            .load(photoStorageReference[screenshotIndexNumber])
             .into(binding.projectDetailsEnlargedImage)
 
         val startBoundsInt = Rect()
         val finalBoundsInt = Rect()
         val globalOffset = Point()
 
-        firstScreenshot.getGlobalVisibleRect(startBoundsInt)
+        screenshotImage.getGlobalVisibleRect(startBoundsInt)
         binding.projectDetailsContainer
             .getGlobalVisibleRect(finalBoundsInt, globalOffset)
         startBoundsInt.offset(-globalOffset.x, -globalOffset.y)
         finalBoundsInt.offset(-globalOffset.x, -globalOffset.y)
 
-        val startBounds = RectF(startBoundsInt)
+        startBounds = RectF(startBoundsInt)
         val finalBounds = RectF(finalBoundsInt)
 
-        val startScale: Float
         if ((finalBounds.width() / finalBounds.height() > startBounds.width() / startBounds.height())) {
             // Extend start bounds horizontally
             startScale = startBounds.height() / finalBounds.height()
@@ -207,7 +292,7 @@ class ProjectDetails : FragmentLifecycleLog(), View.OnClickListener {
             startBounds.bottom += deltaHeight.toInt()
         }
 
-        firstScreenshot.alpha = 0f
+        screenshotImage.alpha = 0f
         binding.projectDetailsEnlargedImage.visibility = View.VISIBLE
 
         binding.projectDetailsEnlargedImage.pivotX = 0f
@@ -263,56 +348,7 @@ class ProjectDetails : FragmentLifecycleLog(), View.OnClickListener {
         }
 
         binding.projectDetailsEnlargedImage.setOnClickListener {
-            currentAnimator?.cancel()
-
-            currentAnimator = AnimatorSet().apply {
-                play(
-                    ObjectAnimator.ofFloat(
-                        binding.projectDetailsEnlargedImage,
-                        View.X,
-                        startBounds.left
-                    )
-                ).apply {
-                    with(
-                        ObjectAnimator.ofFloat(
-                            binding.projectDetailsEnlargedImage,
-                            View.Y,
-                            startBounds.top
-                        )
-                    )
-                    with(
-                        ObjectAnimator.ofFloat(
-                            binding.projectDetailsEnlargedImage,
-                            View.SCALE_X,
-                            startScale
-                        )
-                    )
-                    with(
-                        ObjectAnimator.ofFloat(
-                            binding.projectDetailsEnlargedImage,
-                            View.SCALE_Y,
-                            startScale
-                        )
-                    )
-                }
-                duration = shortAnimationDuration.toLong()
-                interpolator = DecelerateInterpolator()
-                addListener(object : AnimatorListenerAdapter() {
-
-                    override fun onAnimationEnd(animation: Animator) {
-                        firstScreenshot.alpha = 1f
-                        binding.projectDetailsEnlargedImage.visibility = View.GONE
-                        currentAnimator = null
-                    }
-
-                    override fun onAnimationCancel(animation: Animator) {
-                        firstScreenshot.alpha = 1f
-                        binding.projectDetailsEnlargedImage.visibility = View.GONE
-                        currentAnimator = null
-                    }
-                })
-                start()
-            }
+            animateClose(screenshotIndexNumber)
         }
     }
 
