@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myportfolio.data.ProfileData
 import com.example.myportfolio.databinding.ListItemProfileBinding
-import com.example.myportfolio.fragments.certificate.CertificateAdapter
 
 class ProfileAdapter : RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder>() {
 

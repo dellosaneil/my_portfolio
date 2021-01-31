@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.myportfolio.R
-import com.example.myportfolio.utility.RecyclerViewDecorator
 import com.example.myportfolio.data.ProfileData
 import com.example.myportfolio.databinding.FragmentProfileBinding
 import com.example.myportfolio.utility.FragmentLifecycleLog
+import com.example.myportfolio.utility.RecyclerViewDecorator
 
 class ProfileFragment : FragmentLifecycleLog() {
 

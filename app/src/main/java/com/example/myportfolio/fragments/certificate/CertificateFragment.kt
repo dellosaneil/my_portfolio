@@ -2,6 +2,7 @@ package com.example.myportfolio.fragments.certificate
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -110,10 +111,12 @@ class CertificateFragment : FragmentLifecycleLog(), CertificateAdapter.Certifica
             }
         }
     }
+    private val TAG = "CertificateFragment"
 
     /*Checks whether a new data has been placed. */
     private fun checkRefreshFinish() {
         certificateViewModel.needUpdate().observe(viewLifecycleOwner, {
+            Log.i(TAG, "checkRefreshFinish: $it")
             canRefresh = it
             if (!it) {
                 binding.certificateRefresh.isRefreshing = false

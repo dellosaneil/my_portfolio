@@ -65,6 +65,8 @@ class CertificateViewModel @Inject constructor(private val repository: Certifica
         }
     }
 
+    private val TAG = "CertificateViewModel"
+
     /*Checks whether the application is up to date.*/
     fun attachCurrentStateListener() {
         updateCertificateUpdate =

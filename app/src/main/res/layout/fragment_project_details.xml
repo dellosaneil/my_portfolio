@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/projectDetails_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -127,21 +128,21 @@
                         android:layout_width="0dp"
                         android:layout_height="100dp"
                         android:layout_weight="1"
-                        android:scaleType="fitCenter"
                         android:background="?android:selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
+                        android:scaleType="fitCenter"
                         tools:ignore="ContentDescription" />
 
                     <ImageButton
                         android:id="@+id/third_screenshot"
                         android:layout_width="0dp"
                         android:layout_height="100dp"
-                        android:scaleType="fitCenter"
                         android:layout_weight="1"
                         android:background="?android:selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
+                        android:scaleType="fitCenter"
                         tools:ignore="ContentDescription" />
                 </LinearLayout>
             </LinearLayout>
@@ -164,4 +165,14 @@
             android:text="@string/lorem_text"
             android:textSize="16sp" />
     </androidx.core.widget.NestedScrollView>
+
+    <ImageView
+        android:id="@+id/projectDetails_enlargedImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        tools:ignore="ContentDescription" />
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
