@@ -1,5 +1,6 @@
 # My Portfolio
-An application to compile all of the Kotlin/Java Android Application I've built
+An application to compile all of the Kotlin/Java Android Application I've built.
+Auto updates when 'Portfolio Admin' adds new project/certificate with Firebase Firestore and Firebase Storage.
 
 ## Example Screenshot
 ![myPorfolio_certificate](https://user-images.githubusercontent.com/49714687/108613438-16cfce80-742d-11eb-95e2-3659ad6e3479.jpg)
