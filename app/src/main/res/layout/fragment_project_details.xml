@@ -162,7 +162,6 @@
             android:fontFamily="@font/open_sans"
             android:lineSpacingExtra="2dp"
             android:padding="12dp"
-            android:text="@string/lorem_text"
             android:textSize="16sp" />
     </androidx.core.widget.NestedScrollView>
 

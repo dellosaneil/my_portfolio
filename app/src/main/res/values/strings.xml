@@ -23,12 +23,9 @@
     <string name="settings_cache_positive_button">Delete</string>
     <string name="settings_cache_negative_button">Cancel</string>
 
-    <string name="lorem_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-        sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
+    <string name="certificate_long_text">At the beginning of my programming journey, I spent my time watching, reading, and finishing certificates. Finishing my certificates was a big part of my journey in programming because it taught me the basics of Android programming and the programming itself. One certificate I am hopeful to finish is the ‘Google Developers Certification’ which is given by Google when you finish an exam. I am constantly learning how to develop Android Applications and I hope the list would continue.</string>
+    <string name="project_long_text">After I learned the basics of programming, I started to create my own projects. This is the time that I would apply everything that I have learned, and I make each project more complex that the previous one. I love making Android applications because it is the best time to showcase your skills and it would introduce you to multiple problems and you must think creatively to solve it. Creating Android applications was the biggest contributor to my journey as an Android developer.</string>
 
     <string name="certificate_dialog_positive">See Credential</string>
     <string name="certificate_dialog_negative">Cancel</string>

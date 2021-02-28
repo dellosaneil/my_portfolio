@@ -36,7 +36,7 @@ class ProfileFragment : FragmentLifecycleLog() {
 
     private fun placeImage(view: View) {
         Glide.with(view)
-            .load(R.drawable.cat)
+            .load(R.drawable.photo)
             .placeholder(R.drawable.ic_certificates_24)
             .into(binding.dialogCertificateFace)
     }
@@ -56,17 +56,16 @@ class ProfileFragment : FragmentLifecycleLog() {
     private fun populateRecyclerView() {
         val tempData = listOf(
             ProfileData(
-                "Hello there",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-            ),
+                "Android Journey",
+                "I started my Android Development journey at the beginning of the pandemic. I had the basic knowledge in Java which made it easier to transition to Android Development. At the beginning it was stressful because there are not many resources that you can get with Android Development compared to Web Development. It was a steep road doing everything on my own reading, watching, and testing but it was worth it because I became independent."),
             ProfileData(
-                "Cabbiler",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis hendrerit dolor magna eget. Pellentesque habitant morbi tristique senectus et netus et. Ipsum consequat nisl vel pretium lectus. Scelerisque viverra mauris in aliquam. Tincidunt lobortis feugiat vivamus at augue eget arcu. Enim praesent elementum facilisis leo vel. Elementum facilisis leo vel fringilla est ullamcorper eget. Eu augue ut lectus arcu bibendum at varius vel pharetra. At auctor urna nunc id cursus metus aliquam. Turpis egestas maecenas pharetra convallis posuere morbi leo. Enim lobortis scelerisque fermentum dui faucibus in ornare. Cursus vitae congue mauris rhoncus aenean vel elit scelerisque mauris. Curabitur gravida arcu ac tortor dignissim convallis aenean et. Magna eget est lorem ipsum dolor sit amet. Proin sed libero enim sed faucibus turpis. Massa id neque aliquam vestibulum morbi blandit cursus risus at."
-            ),
+                "Learning Style",
+                "I would watch some YouTube video regarding the new concept that I want to learn. After finishing the video, I would find articles from medium.com to supplement that videos that I watch, then I would read the official documentation of the Android team from Google. And the most important one is I would make projects that would test my knowledge regarding the new concept."),
+            ProfileData("Why Android Development?",
+                "I chose Android Development as my career path because I can bring the projects that I created with me. I can use it in my daily life, and I can create applications for the people I know. Even though it was hard to start with Android Development it was still fun for me because I love what I was doing. "),
             ProfileData(
-                "Last",
-                "Sit amet aliquam id diam maecenas ultricies. Lectus magna fringilla urna porttitor rhoncus. Massa tincidunt nunc pulvinar sapien. Justo eget magna fermentum iaculis eu non. At urna condimentum mattis pellentesque id nibh. Vitae sapien pellentesque habitant morbi tristique senectus et. Mattis nunc sed blandit libero. Sed egestas egestas fringilla phasellus. Suspendisse in est ante in nibh mauris cursus mattis. Vitae tempus quam pellentesque nec nam. Vulputate odio ut enim blandit volutpat maecenas. Fermentum posuere urna nec tincidunt praesent semper feugiat. Tincidunt eget nullam non nisi est sit. Consectetur adipiscing elit duis tristique. Malesuada pellentesque elit eget gravida cum sociis. Faucibus a pellentesque sit amet porttitor eget. Lacus vel facilisis volutpat est velit egestas dui id ornare. Ullamcorper eget nulla facilisi etiam dignissim diam quis."
-            )
+                "About me",
+                "I am a self-taught Android Developer which mainly use Kotlin in my Android Applications. Some of my hobbies are solving Mathematical equations, Muay Thai, programming and learning. I dedicated 2 years just to learn programming and I am confident in my skills as a programmer. I learn by doing projects and I make sure that it is scalable. I like writing clean codes with functions/method that would be understood even without documentation. I like using MVVM in my projects because it makes the code cleaner.")
         )
         profileAdapter.setIntroductionList(tempData)
     }

@@ -222,6 +222,7 @@ class ProjectDetails : FragmentLifecycleLog(), View.OnClickListener {
             "Jose Rizal Reviewer" -> "com.lazybattley.thelazybattley"
             "Portfolio Admin" -> "com.example.portfolioadmin"
             "News Tracker" -> "com.example.newstracker"
+            "Exercise Progress Tracker" -> "com.example.exercisetracker"
             else -> null
         }
     }
